@@ -117,7 +117,7 @@ await transport.sendMail({
   subject: "Here is your url to reset your password", 
   text: `http://localhost:9000/update-password?code=${code}`, 
 })
-return res.send("stored in db")
+return res.render("signin",{error:"check your email to reset your password",body:{}})
 }catch(err){//handling errors
     console.log(err)
     return res.render("500")
@@ -150,7 +150,10 @@ let hashedpassword = await bcrypt.hash(req.body.password,11)
 let user = await um.findOne({email:email})
 user.password = hashedpassword
 await user.save()
-return res.send("password updated sucsessfully")
+//deleting the token
+await tm.deleteOne({email:email})
+//
+return res.redirect("/signin")//redirecting to signin
 }catch(error){
     console.log(`error while updating password ${error}`)
     return res.status(500).render("500")

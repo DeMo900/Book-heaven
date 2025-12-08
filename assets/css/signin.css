@@ -119,5 +119,6 @@ footer p {
   }
 
   .google-icon img:hover {
-    background: #f0f0f0;
+ width: 42px;
+    height: 42px;
   }

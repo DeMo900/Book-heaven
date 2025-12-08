@@ -1,10 +1,12 @@
 //requiring
 const um = require("../models/user")
+const tm = require("../models/token")
 const bcrypt = require("bcrypt")
 const validate = require("../validation/user")
 const { body,validationResult } = require("express-validator")
 const mail = require("nodemailer")
 const crypto = require("crypto")
+const { token } = require("express-csrf")
 
 //GET signup
 exports.Getsignup = (req,res)=>{
@@ -90,10 +92,17 @@ if(!found){
 }
 //generating code
 let code = crypto.randomBytes(16).toString("hex") 
+//checking if another token fron the sane user already exists and deleting it
+let existingtoken = await tm.findOne({email:req.body.email})
+if(existingtoken){
+    await tm.deleteOne({email:req.body.email})
+}
 //storing the code
-req.session.code={code:code,email:req.body.email}
-req.session.save()
-console.log(req.session.code)
+const newtoken = new tm ({
+    email:req.body.email,
+    token:code
+})
+await newtoken.save()
 //sending the email
 let transport = mail.createTransport({//creating transport
     service:"gmail",
@@ -108,30 +117,34 @@ await transport.sendMail({
   subject: "Here is your url to reset your password", 
   text: `http://localhost:9000/update-password?code=${code}`, 
 })
-return res.send("session created"+req.session.code)
+return res.send("stored in db")
 }catch(err){//handling errors
     console.log(err)
     return res.render("500")
 }
 }
 //Getupdate
-exports.Getupdate = (req,res)=>{
-let {code} = req.session.code
-if(code !== req.query.code){
+exports.Getupdate = async (req,res)=>{
+const token = await tm.findOne({token:req.query.code})
+
+if(!token){
 return res.send("error invalid code")
 }
-res.render("update-password",{error:""})
+console.log(token.email)
+res.render("update-password",{error:"",email:token.email})//sending the email to the front end
 }
 //updating password
 exports.Putupdate = async(req,res)=>{
-let {email} = req.session.code
+    console.log("sent")
+const {email} = req.body
+console.log(email)
 try{
 //validating password
 const results = validationResult(req)
 if(!results.isEmpty()){
-    return res.status(400).render("update-password",{error:results.errors[0].msg})
+    return res.status(400).render("update-password",{error:results.errors[0].msg, email:email})
 }
-//hashing the new password
+//hashing the new passwordz
 let hashedpassword = await bcrypt.hash(req.body.password,11)
 //getting the user
 let user = await um.findOne({email:email})

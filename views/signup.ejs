@@ -18,9 +18,12 @@
       <input type="text" name="username"placeholder="Full Name" value="<%=typeof body !=="undefined"?body.username:""%>" required>
       <input type="email" name="email" placeholder="Email Address" value="<%=typeof body !=="undefined"?body.email:""%>" required>
       <input type="password" name="password" placeholder="Password" value="<%=typeof body !=="undefined"?body.password:""%>" required>
-      <input type="password" name="confirmpassword" value="<%=typeof body !=="undefined"?body.confirmpassword:""%>" required>
+      <input type="password" name="confirmpassword" placeholder="confirmpassword" value="<%=typeof body !=="undefined"?body.confirmpassword:""%>" required>
       <button type="submit">Sign Up</button>
       <p class="switch">Already have an account? <a href="/signin">Login</a></p>
+       <a href="/auth/google" class="google-icon">
+    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
+     </a>
       <p class="error"><%=typeof error !== "undefined"?error:""%></p>
     
     </form>

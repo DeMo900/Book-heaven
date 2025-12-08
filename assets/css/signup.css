@@ -108,3 +108,18 @@ footer p {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   
 }
+  .google-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background: white;
+    transition: 0.2s;
+  }
+
+  .google-icon img:hover {
+    background: #f0f0f0;
+    width: 42px;
+    height: 42px;
+  }

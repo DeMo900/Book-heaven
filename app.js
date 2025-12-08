@@ -5,12 +5,14 @@ const multer = require("multer");
 const middlewares = require("./middlewares.js");
 const passport = require("passport");
 const helmet = require("helmet");
+const override = require("method-override");
 //router
 const homerouter = require("./routes/routes.js");
 require("dotenv").config();
 //app
 const app = express();
 //middlewares
+app.use(override("_method"));
 app.use(multer({storage:middlewares.storage,fileFilter:middlewares.filter}).single("cover"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

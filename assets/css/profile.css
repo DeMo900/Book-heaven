@@ -1,0 +1,117 @@
+   body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #f2f2f2;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+      color: white;
+      border-bottom-left-radius: 80px;
+      border-bottom-right-radius: 80px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .hero h2 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+    }
+
+    .profile-info {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      text-align: left;
+    }
+
+    .profile-info h3 {
+      margin: 15px 0 5px;
+      font-weight: 600;
+    }
+
+    .profile-info p {
+      margin: 0 0 15px;
+      font-weight: 400;
+    }
+
+    .books {
+      margin-top: 40px;
+    }
+
+    .books h3 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .book-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .book-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+
+    .book-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      filter: brightness(80%);
+      transition: transform 0.5s ease, filter 0.3s ease;
+    }
+
+    .book-card:hover img {
+      transform: scale(1.1);
+      filter: brightness(60%);
+    }
+
+    .book-card .overlay {
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .book-card:hover .overlay {
+      color: #ffaf7b;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #14141e;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    footer p {
+      margin: 0;
+      color: #aaa;
+      font-size: 0.9rem;
+    }

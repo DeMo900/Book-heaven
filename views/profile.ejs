@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/profile.css">
+</head>
+<body>
+
+  <div class="hero">
+    <h2>User Profile</h2>
+    <p>Welcome to your profile page</p>
+  </div>
+
+  <div class="profile-info">
+    <h3>Username:</h3>
+    <p><%=username%></p>
+    <h3>Email:</h3>
+    <p><%=email%></p>
+  </div>
+
+  <div class="books">
+    <h3>Posted Books</h3>
+    <div class="book-grid">
+        <% books.forEach(book=>{ %>
+      <div class="book-card">  
+        <img src="<%= book.coverurl.startsWith('http') ? book.coverurl : `../uploads/${book.coverurl}` %>" alt="Book Cover" />  
+        <div class="overlay"><%=book.title%></div>
+          <%}) %>
+      </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Book-heaven</p>
+  </footer>
+
+</body>
+</html>

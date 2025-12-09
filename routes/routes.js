@@ -53,7 +53,7 @@ router.post("/forgot-password",
 router.get("/auth/google",page);//askingfor the required data
 router.get("/auth/google/callback",fail,sucsess);//callback route
         //profile
-router.get("/profile",profile.Getprofile)
+router.get("/profile",profile.Getprofile,middlewares.check)
 //errors
 router.get("/500",errors.get500)
 //about 

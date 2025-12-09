@@ -57,33 +57,16 @@
       margin-bottom: 30px;
     }
 
-    .book-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-
-    .book-card {
-      background: rgba(255,255,255,0.05);
-      border-radius: 20px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      text-align: center;
-    }
+  .book-grid {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+justify-content: center;
+}
 
     .book-card:hover {
       transform: translateY(-6px) scale(1.03);
       box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-    }
-
-    .book-card img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      filter: brightness(80%);
-      transition: transform 0.5s ease, filter 0.3s ease;
     }
 
     .book-card:hover img {
@@ -91,27 +74,68 @@
       filter: brightness(60%);
     }
 
-    .book-card .overlay {
-      padding: 15px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-
     .book-card:hover .overlay {
       color: #ffaf7b;
     }
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      background: #14141e;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
+.books h3 {
+text-align: center;
+font-size: 2rem;
+font-weight: 600;
+margin-bottom: 30px;
+}
 
-    footer p {
-      margin: 0;
-      color: #aaa;
-      font-size: 0.9rem;
-    }
+
+.book-grid {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+justify-content: flex-start;
+padding: 10px;
+}
+
+
+.book-card {
+position: relative;
+width: 150px;
+text-align: center;
+border-radius: 10px;
+overflow: hidden;
+cursor: pointer;
+}
+
+
+.book-card img {
+width: 100%;
+height: 220px;
+object-fit: cover;
+display: block;
+}
+
+
+.overlay {
+position: absolute;
+bottom: 0;
+width: 100%;
+background: rgba(0,0,0,0.6);
+color: #fff;
+padding: 5px 0;
+font-size: 1rem;
+font-weight: 600;
+text-align: center;
+}
+
+
+footer {
+text-align: center;
+padding: 25px;
+background: #14141e;
+border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+
+footer p {
+margin: 0;
+color: #aaa;
+font-size: 0.9rem;
+}

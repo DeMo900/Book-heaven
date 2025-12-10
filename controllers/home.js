@@ -1,6 +1,8 @@
 const bm = require("/home/adam/coding/Books-collecction/models/book.js")
+const um = require("/home/adam/coding/Books-collecction/models/user.js")
 //home 
 let Gethome = (req,res)=>{
+  
     res.render("home")
 }
 module.exports = {Gethome}

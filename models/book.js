@@ -1,3 +1,4 @@
+////
 const mongodb = require("mongoose");
 
 const book = new mongodb.Schema({
@@ -8,6 +9,7 @@ const book = new mongodb.Schema({
   publisyear : {type : Number , maxlength:4, required:true }, 
   coverurl : {type:String , required:true},
   rating : {type : Number  ,default:0, max:5, },
+  filename:{type : String , unique : true , required : true},
   createdAt : {type:Date , default:Date.now()},
 });
 

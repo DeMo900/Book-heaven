@@ -72,6 +72,7 @@ justify-content: center;
     .book-card:hover img {
       transform: scale(1.1);
       filter: brightness(60%);
+      transition: 1.5s ease-in-out;
     }
 
     .book-card:hover .overlay {
@@ -139,3 +140,70 @@ margin: 0;
 color: #aaa;
 font-size: 0.9rem;
 }
+body {
+font-family: 'Poppins', sans-serif;
+margin: 0;
+background: linear-gradient(135deg, #1f1c2c, #928dab);
+color: #f2f2f2;
+}
+
+
+.hero {
+text-align: center;
+padding: 100px 20px;
+background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+color: white;
+border-bottom-left-radius: 80px;
+border-bottom-right-radius: 80px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+
+.profile-info {
+max-width: 600px;
+margin: 20px auto;
+background: rgba(255,255,255,0.05);
+padding: 30px;
+border-radius: 20px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+text-align: left;
+}
+
+
+.books {
+max-width: 1000px;
+margin: 40px auto;
+padding: 20px;
+background: rgba(255,255,255,0.05);
+border-radius: 20px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+text-align: center;
+}
+
+
+.books h3 {
+font-size: 2rem;
+font-weight: 600;
+margin-bottom: 30px;
+}
+
+
+.book-grid {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+justify-content: center; /* Center the books under the heading */
+padding: 10px;
+}
+
+
+.book-card {
+position: relative;
+width: 150px;
+text-align: center;
+border-radius: 10px;
+overflow: hidden;
+cursor: pointer;
+}
+
+

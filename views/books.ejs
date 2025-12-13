@@ -24,10 +24,12 @@
      
 <% if (data.length > 0) { %>
   <section id="bookgrid" class="book-container">
-    <% data.forEach(function(book){ %>
+    <% data.forEach((book)=>{ %>
       <div class="book-card">
         <div class="book-info">
+          <a href="<%=`../uploads/${book.filename}`%>">
           <img src="<%= book.coverurl.startsWith('http') ? book.coverurl : `../uploads/${book.coverurl}` %>" alt="Book Cover" />
+          </a>
           <h3><%= book.title %></h3>
           <p><%= book.author %></p>
           <p><%= book.publisyear %></p>

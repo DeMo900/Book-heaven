@@ -10,6 +10,10 @@ res.render("add-book",{error:"",body:""})
 }
 //create book
 exports.createbook = async(req,res)=>{
+    //declaring files
+    let cover = req.files.cover[0].filename
+    let file = req.files.file[0].filename
+
     //validation
     try{
 let results = validationResult(req)
@@ -20,18 +24,18 @@ if(!results.isEmpty()){
   return  res.render("add-book",{error:results.array(),body:req.body})
    // return res.status(422).render("add-book",{errors:results.array()})
 }
- if (!req.body.cover){
+ if (!cover){
     return res.render("add-book",{error:[{msg:"cover image is required"}],body:req.body})
 }
 //storing the book  
 let newbm = new bm({
- title: req.body.title,
-  author: req.body.author,
-  desc: req.body.desc,
-  genre: req.body.genre,
-  publisyear: req.body.publisyear,
-  coverurl: req.body.cover
-
+ title : req.body.title,
+  author : req.body.author,
+  desc : req.body.desc,
+  genre : req.body.genre,
+  publisyear :  req.body.publisyear,
+  coverurl : cover,
+filename : file
 })
 await newbm.save()
 //getting the user

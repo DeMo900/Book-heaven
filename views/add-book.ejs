@@ -8,39 +8,58 @@
 </head>
 
 <body>
-  <%-include('includes/nav.ejs')%>
+  <%- include('includes/nav.ejs') %>
+
   <div class="add-book-container">
     <div class="book-preview">
+      <!-- Preview image only; inputs are inside the form -->
       <img id="cover-preview" src="https://images.unsplash.com/photo-1663465374413-83cba00bff6f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=580" alt="Book Cover">
-      <label for="cover" class="upload-btn">Upload Cover</label>
-      <input type="file" id="cover" name="cover" accept="image/*" hidden>
     </div>
 
     <div class="book-form">
       <h1>Add a New Book</h1>
 
-      <!-- placeholder for error messages (server or client can fill/remove .hidden) -->
-      <% if (error !==""){%>
-       <%error.forEach((el)=>{%>
-      <div id="error-box" class="error-box" role="alert" aria-live="assertive"><%=el.msg%></div>
-        <%})%>
-      <%}%>
-      
-      <!-- enable file uploads -->
+      <% if (error !== "") { %>
+        <% error.forEach((el) => { %>
+          <div id="error-box" class="error-box" role="alert" aria-live="assertive"><%= el.msg %></div>
+        <% }) %>
+      <% } %>
+
+      <!-- All inputs moved inside the form -->
       <form action="/books/add-book" method="POST" enctype="multipart/form-data">
         <div class="input-group">
-          <label for="title" >Title</label>
-          <input type="text" name="title" id="title" value= "<%=body!==""?body.title:""%>"  placeholder="Book title" minlength="4" maxlength="80" required>
+          <label for="title">Title</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Book title"
+            minlength="4"
+            maxlength="80"
+            required
+            value="<%= body !== '' ? body.title : '' %>"
+          >
         </div>
 
         <div class="input-group">
           <label for="author">Author</label>
-          <input type="text" id="author" name="author" placeholder="Author name" requiredvalue= "<%=body!==""?body.author:""%>">
+          <input
+            type="text"
+            id="author"
+            name="author"
+            placeholder="Author name"
+            required
+            value="<%= body !== '' ? body.author : '' %>"
+          >
         </div>
 
         <div class="input-group">
           <label for="desc">Description</label>
-          <textarea id="description" name="desc" placeholder="Write a short description..."value= "<%=body!==""?body.desc:""%>"></textarea>
+          <textarea
+            id="desc"
+            name="desc"
+            placeholder="Write a short description..."
+          ><%= body !== '' ? body.desc : '' %></textarea>
         </div>
 
         <div class="input-group">
@@ -65,24 +84,42 @@
           <div class="genre-display" id="genre-display" aria-hidden="true">Selected: —</div>
         </div>
 
-        <!-- simplified published year input (no JS picker) -->
+        <!-- Published year (note: maxlength doesn't apply to number; removed) -->
         <div class="input-group">
           <label for="publisyear">Published Year</label>
-          <input type="number" id="publisyear" name="publisyear" min="1970" max="3000" placeholder="e.g. 2023" required class="custom-select" maxlength="4"
-          value= "<%=body!==""?body.publisyear:""%>"/>
+          <input
+            type="number"
+            id="publisyear"
+            name="publisyear"
+            min="1970"
+            max="3000"
+            placeholder="e.g. 2023"
+            required
+            class="custom-select"
+            value="<%= body !== '' ? body.publisyear : '' %>"
+          >
         </div>
 
-      <div class="input-group">
-    <label>Cover</label>
-    <div class="file-row">
-        <label for="cover" class="upload-btn">Upload Cover</label>
-        <span class="file-name" id="file-name">No file chosen</span>
-        <input type="file" id="cover" name="cover"  >
-        <!-- Add this image tag for the preview: -->
-        <img id="cover-preview" src="" alt="Cover Preview" style="max-width: 100px; max-height: 100px; margin-top: 10px;"/>
-    </div>
-</div>
+        <!-- File uploads (moved inside form) -->
+        <div class="input-group">
+          <label>Cover</label>
+          <div class="file-row">
+            <label for="cover" class="upload-btn">Upload Cover</label>
+            <span class="file-name" id="cover-file-name">No file chosen</span>
+            <input type="file" id="cover" name="cover" accept="image/*">
+          </div>
+          <!-- Preview image -->
+          <img id="cover-preview-inline" src="" alt="Cover Preview" style="max-width: 100px; max-height: 100px; margin-top: 10px;">
+        </div>
 
+        <div class="input-group">
+          <label>Book file (PDF)</label>
+          <div class="file-row">
+            <label for="file" class="upload-btn">Upload file</label>
+            <span class="file-name" id="pdf-file-name">No file chosen</span>
+            <input type="file" id="file" name="file" accept="application/pdf">
+          </div>
+        </div>
 
         <button type="submit" class="submit-btn">Add Book</button>
       </form>

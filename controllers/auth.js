@@ -6,8 +6,8 @@ const validate = require("../validation/user")
 const { body,validationResult } = require("express-validator")
 const mail = require("nodemailer")
 const crypto = require("crypto")
-const { token } = require("express-csrf")
-
+const emitter = require("../emiter.js")
+ require("../emiter.js")
 //GET signup
 exports.Getsignup = (req,res)=>{
 res.render("signup")
@@ -63,6 +63,8 @@ try{
         console.log("password doesn't match")
       return  res.status(400).render("signin",{error:"wrong password!",body:req.body})
     }
+    //sending welcome mail
+    emitter.emit("loggedIn",req.body.email,user.username)
     //creating session 
     req.session.user = {email:req.body.email,
         id:user._id

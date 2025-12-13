@@ -29,11 +29,10 @@ exports.storage = multer.diskStorage({
   filename:(req,file,cb)=>{
     let name = Date.now()+"-"+file.originalname
     cb(null,name)
-    req.body.cover = name;
   }
 })
 exports.filter = (req,file,cb)=>{
-  if(file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg"){
+  if(file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "application/pdf"){
     cb(null,true)
   }else{
 cb(null,false)

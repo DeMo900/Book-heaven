@@ -1,6 +1,7 @@
 const passport = require("passport");
 const OAuth2Strategy = require("passport-oauth2").Strategy;
 const um = require("/home/adam/coding/Books-collecction/models/user.js");
+const emiter = require("../emiter")
 //askingfor the required data
 let page = passport.authenticate("google",{scope:["profile","email"]});
 
@@ -16,6 +17,7 @@ let sucsess =async (req,res)=>{
         email:req.user.email,
         username:req.user.username
     }
+    emiter.emit("loggedIn",req.user.email,req.user.username)
     res.redirect("/");
 }
 module.exports = {page,fail,sucsess};

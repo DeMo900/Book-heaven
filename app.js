@@ -13,7 +13,8 @@ require("dotenv").config();
 const app = express();
 //middlewares
 app.use(override("_method"));
-app.use(multer({storage:middlewares.storage,fileFilter:middlewares.filter}).single("cover"));
+app.use(multer({storage:middlewares.storage,fileFilter:middlewares.filter}).fields([{name:"cover",maxCount:1}
+  ,{name:"file",maxCount:1}]));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("assets"));

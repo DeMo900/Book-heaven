@@ -5,6 +5,7 @@ const multer = require("multer")
 const passport = require("passport")
 const google = require("passport-google-oauth20").Strategy;
 const um = require("./models/user.js")
+const limit = require("express-rate-limit")
 require("dotenv").config();
 //sesion creation
 exports.session = session({
@@ -72,3 +73,10 @@ exports.serial = passport.serializeUser((user, done) => {
  exports.deserial = passport.deserializeUser((id, done) => {
   done(null, id);
 });
+exports.limit = limit.rateLimit({
+  windowMs:15*60*1000,
+  limit:100,
+  standardHeaders:"draft-8",
+  legacyHeaders:false,
+  message:"limit reached"
+})

@@ -12,6 +12,7 @@ require("dotenv").config();
 //app
 const app = express();
 //middlewares
+app.use(middlewares.limit)
 app.use(override("_method"));
 app.use(multer({storage:middlewares.storage,fileFilter:middlewares.filter}).fields([{name:"cover",maxCount:1}
   ,{name:"file",maxCount:1}]));

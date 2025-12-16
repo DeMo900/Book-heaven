@@ -33,7 +33,20 @@
           <h3><%= book.title %></h3>
           <p><%= book.author %></p>
           <p><%= book.publisyear %></p>
-          <p id ="star">&#9734;</p>
+          <%if(staredbooks.length>0){%>
+          <%for(const el of staredbooks){%>
+<%if(el.title===book.title){%>
+  <p id="star">★</p>  
+  <%break;%>
+<%}else{%>
+<p id ="star">&#9734;</p>
+<%break;%>
+<%}%>
+    <%}%>
+    <%}else{%>
+<p id="star">&#9734;</p>     
+    <%}%>
+
           <span class="genre-tag"><%= book.genre %></span>
         </div>
       </div>

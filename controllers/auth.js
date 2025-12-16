@@ -35,7 +35,7 @@ req.body.password = hashedpassword
 //storing the user
 const nuser =  new um(req.body)
 await nuser.save()//saving
-return res.redirect("/signup")//redirecting
+return res.redirect("/signin")//redirecting
 //loging the error and redirecting to the error page
 }catch(err){
     console.log(err)

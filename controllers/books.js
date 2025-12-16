@@ -12,8 +12,13 @@ const um = require("/home/adam/coding/Books-collecction/models/user.js")
    return res.render("books",{data:filterdata,query:""})
     }
     //if not get and render all boks 
-        let data = await bm.find()
-        res.render("books",{data:data})
+      let books = await bm.find()
+
+    //getting user
+      let user = await um.findOne({_id:req.session.user.id})
+     let populatedbooks = await user.populate("staredbooks")
+        let staredbooks = populatedbooks.staredbooks
+       return res.render("books",{data:books,staredbooks})
   }catch(err){
     console.log(`error from Getbooks \n${err}`)
     res.status(500).redirect("/500")
@@ -47,17 +52,18 @@ exports.star = async(req,res)=>{
     console.log(user)
     //geting book
 let book = await bm.findOne({title:title})
-console.log(req.query)
 //stared
 if(stared === "true"){
  book.rating +=1
 await book.save()
-console.log(book)
+user.staredbooks.push(book._id)
+await user.save()
   //unstared
 }else if(stared === "false"){
  book.rating -= 1
 await book.save()
-console.log(book)
+user.staredbooks.pull(book._id)
+await user.save()
 }
   }catch(err){
     console.log(`error while staring ${err}`)

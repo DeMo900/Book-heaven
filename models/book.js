@@ -8,7 +8,7 @@ const book = new mongodb.Schema({
   genre:{type:String , minlength :6 , maxlength:16, enum:["Fiction","Non-Fiction","Fantasy","Science Fiction","Romance","Thriller","Mystery","Biography","Self-Help","History","Poetry"], required:true},
   publisyear : {type : Number , maxlength:4, required:true }, 
   coverurl : {type:String , required:true},
-  rating : {type : Number  ,default:0, max:5, },
+  rating : {type : Number  ,default:0, },
   filename:{type : String , unique : true , required : true},
   createdAt : {type:Date , default:Date.now()},
 });

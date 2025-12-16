@@ -66,7 +66,39 @@ for(let i=0;i<array.length;i++){
 
  input.addEventListener("input", sendrequest);
 
-      
+//staring
+let star = document.querySelectorAll("p")
+let stararr = [...star]
+
+stararr.forEach(element => {
+element.addEventListener("click",()=>{
+  console.log(element.innerHTML)
+  if(element.innerHTML === "☆"){
+    console.log(element.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML)
+    fetch(`/books?title=${element.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML}&stared=true`,{
+      method:"PUT",
+         headers: {
+    'Content-Type': 'application/json', // Set necessary headers
+  },
+    }
+  ).then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error while updating data:', error));
+    element.innerHTML = "&#9733;"
+  }else if (element.innerHTML === "★"){
+     fetch(`/books?title=${element.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML}&stared=false`,{
+      method:"PUT",
+       headers: {
+    'Content-Type': 'application/json', // Set necessary headers
+  },
+     }
+  ).then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error while updating data:', error));
+element.innerHTML = "&#9734;"
+  }
+})    
+});
   /*
  <div class="book-card">
           <img src="<%= el.coverurl %>" alt="Book Cover" />

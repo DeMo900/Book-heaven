@@ -8,7 +8,8 @@ password:{type : String , minlength : 8 , maxlength : 80 , match : /^(?=.*[a-z])
 email : {type : String , unique : true , maxlength : 50 , required : true , match : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/},
 role:{type : String , enum : [`creator`,`user`] , default : `user` , required : true },
 createdAt:{type:Date , default:Date.now()},
-books:[{type:mongodb.Schema.Types.ObjectId,ref:"book"}]
+books:[{type:mongodb.Schema.Types.ObjectId,ref:"book"}],
+staredbooks:[{type:mongodb.Schema.Types.ObjectId,ref:"book"}]
 })
 //modeling 
 const um = mongodb.model("user",user)

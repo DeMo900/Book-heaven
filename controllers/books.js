@@ -1,6 +1,6 @@
 // ...existing code...
 const bm = require("/home/adam/coding/Books-collecction/models/book.js")
-
+const um = require("/home/adam/coding/Books-collecction/models/user.js")
 //getting books
  exports.Getbooks = async(req,res)=>{
   try{
@@ -36,4 +36,31 @@ return res.json({
 console.log(`error from Postbook \n${err}`)
 res.status(500).redirect("/500")
   } 
+}
+//staring a book 
+exports.star = async(req,res)=>{
+  try{
+    //queries
+    let {title,stared} = req.query
+    //getting user
+   let user = await um.findOne({email:req.session.user.email})
+    console.log(user)
+    //geting book
+let book = await bm.findOne({title:title})
+console.log(req.query)
+//stared
+if(stared === "true"){
+ book.rating +=1
+await book.save()
+console.log(book)
+  //unstared
+}else if(stared === "false"){
+ book.rating -= 1
+await book.save()
+console.log(book)
+}
+  }catch(err){
+    console.log(`error while staring ${err}`)
+    return res.status(500).render("500")
+  }
 }

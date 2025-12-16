@@ -25,6 +25,7 @@ router.get("/",middlewares.check,homecontroller.Gethome)
 //books
 router.get("/books",middlewares.check,books.Getbooks)
 router.post("/books/search",middlewares.check,books.searchbook)
+router.put("/books",books.star)
 //add book
 router.get("/books/add-book",middlewares.check,addbook.Getaddbook)
 router.post("/books/add-book",

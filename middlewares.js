@@ -6,6 +6,15 @@ const passport = require("passport")
 const google = require("passport-google-oauth20").Strategy;
 const um = require("./models/user.js")
 const limit = require("express-rate-limit")
+const {createClient} = require("redis")
+const RedisStore = require("connect-redis")
+const redisclient = createClient()
+redisclient.connect().then(()=>{
+  console.log(`conected to redis`)
+}) .catch(err=>{
+   console.log(`error from redis ${err}`)
+})
+let redisstore = new RedisStore.RedisStore({client:redisclient})
 require("dotenv").config();
 //sesion creation
 exports.session = session({
@@ -13,7 +22,7 @@ exports.session = session({
   resave:false,
   saveUninitialized:false,
     cookie: { maxAge: 900000 },
-store:store.create({mongoUrl:process.env.DB_URL,ttl:60*15})
+store:redisstore
 })
 //authentication middleware
 exports.check = (req,res,next)=>{

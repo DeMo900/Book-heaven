@@ -40,7 +40,7 @@ return res.json({
   }catch(err){  
 console.log(`error from Postbook \n${err}`)
 res.status(500).redirect("/500")
-  } 
+  } x
 }
 //staring a book 
 exports.star = async(req,res)=>{

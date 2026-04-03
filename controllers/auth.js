@@ -19,22 +19,21 @@ res.render("signin",{error:undefined,body:undefined})
 //POST signup
 exports.Postsignup = async(req,res)=>{
 //validate data
+const {username,email,password} = req.body
 const {error} = validate(req.body,"signup")
 if(error){
     return res.status(400).render("signup",{error:error.details[0].message,body:req.body})
 }
 //check if user already exists
 try{
-let user = await um.findOne({email:req.body.email})//finding
+const user = await um.findOne({email})//finding
 if(user){
     return res.status(400).render("signup",{error:"User with this email already exists",body:req.body})
 }
 //hasing the password
-let hashedpassword = await bcrypt.hash(req.body.password,11)
-req.body.password = hashedpassword
+const hashedpassword = await bcrypt.hash(password,11)
 //storing the user
-const nuser =  new um(req.body)
-await nuser.save()//saving
+await um.create({username,email,password:hashedpassword})//saving
 return res.redirect("/signin")//redirecting
 //loging the error and redirecting to the error page
 }catch(err){
@@ -45,23 +44,22 @@ return res.redirect("/signin")//redirecting
 //POST signin
 exports.Postsignin = async(req,res)=>{
 //validation
-const {error} = validate({email:req.body.email,password:req.body.password},"signin")
-if(error){
-    console.log(error)
-    return res.status(400).render("signin",{error:error.details[0].message,body:req.body})
+const {email,password} = req.body
+if(!email || !password){
+    return res.status(400).render("signin",{error:"Please fill in all the fields",body:req.body})
 }
 //chcking if user exists
 try{
-    let user = await um.findOne({email : req.body.email})
+    const user = await um.findOne({email : email})
     if (!user){
-        console.log("user doesn't exist")
-        return res.status(400).render("signin",{error:`user doesn't exist, signup first`,body:req.body})
+        console.log("Invalid email/password")
+        return res.status(400).render("signin",{error:`Invalid email/password`,body:req.body})
     }
     //checking if password is correct
-    let compare = await bcrypt.compare(req.body.password,user.password)
-    if(!compare){
-        console.log("password doesn't match")
-      return  res.status(400).render("signin",{error:"wrong password!",body:req.body})
+    const IsPasswordCorrect = await bcrypt.compare(req.body.password,user.password)
+    if(!IsPasswordCorrect){
+        console.log("Invalid email/password")
+      return  res.status(400).render("signin",{error:"Invalid email/password",body:req.body})
     }
     //sending welcome mail
     emitter.emit("loggedIn",req.body.email,user.username)
@@ -83,28 +81,28 @@ res.render("forgot-password")
 //forgotpassword
 exports.Postforgotpassword = async (req,res)=>{
 //validating the input
+const {email} = req.body
 try{
 const results= validationResult(req)
 if(!results.isEmpty()){
  return console.log(results.errors[0].msg)
 }
-let found = await um.findOne({email:req.body.email})
-if(!found){
+let isFound = await um.findOne({email})
+if(!isFound){
   return  console.log("email doesn't exist signup")
 }
 //generating code
 let code = crypto.randomBytes(16).toString("hex") 
 //checking if another token fron the sane user already exists and deleting it
-let existingtoken = await tm.findOne({email:req.body.email})
+let existingtoken = await tm.findOne({email})
 if(existingtoken){
-    await tm.deleteOne({email:req.body.email})
+    await tm.deleteOne({email})
 }
 //storing the code
-const newtoken = new tm ({
-    email:req.body.email,
+await tm.create({
+    email,
     token:code
 })
-await newtoken.save()
 //sending the email
 let transport = mail.createTransport({//creating transport
     service:"gmail",
@@ -128,7 +126,6 @@ return res.render("signin",{error:"check your email to reset your password",body
 //Getupdate
 exports.Getupdate = async (req,res)=>{
 const token = await tm.findOne({token:req.query.code})
-
 if(!token){
 return res.send("error invalid code")
 }
@@ -149,11 +146,9 @@ if(!results.isEmpty()){
 //hashing the new passwordz
 let hashedpassword = await bcrypt.hash(req.body.password,11)
 //getting the user
-let user = await um.findOne({email:email})
-user.password = hashedpassword
-await user.save()
+await um.updateOne({email},{$set:{password:hashedpassword}})
 //deleting the token
-await tm.deleteOne({email:email})
+await tm.deleteOne({email})
 //
 return res.redirect("/signin")//redirecting to signin
 }catch(error){

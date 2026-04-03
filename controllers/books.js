@@ -60,9 +60,8 @@ user.staredbooks.push(book._id)
 await user.save()
   //unstared
 }else if(stared === "false"){
- book.rating -= 1
-await book.save()
-user.staredbooks.pull(book._id)
+  bm.updateOne({title:title},{$inc:{rating:-1}})
+ user.staredbooks.pull(book._id)
 await user.save()
 }
   }catch(err){

@@ -1,7 +1,7 @@
 ///setting the reouter 
 const express = require("express");
 const router = express.Router();
-const middlewares = require("../middlewares.js")
+const middlewares = require("../middleware")
 const {body} = require("express-validator")
 const passport = require("passport");
 const OAuth2Strategy = require("passport-oauth2").Strategy;

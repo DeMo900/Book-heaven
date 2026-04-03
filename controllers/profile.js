@@ -1,6 +1,6 @@
 //requiring 
 const um = require("/home/adam/coding/Books-collecction/models/user.js")
-
+const bm = require("/home/adam/coding/Books-collecction/models/book.js")
 
 exports.Getprofile = async(req,res)=>{
  try{
@@ -10,11 +10,10 @@ exports.Getprofile = async(req,res)=>{
     const {email,username,createdAt} = data
     const date = `${createdAt.getDay()}-${createdAt.getMonth()}-${createdAt.getFullYear()}`
     //user's books
-    let books = await data.populate('books')
-    const booksarray = books.books
-    //looping on the array and getting the required data
-  return  res.render("profile",{books:booksarray, email, username,date})    
+    const books = await bm.find({publisherId:data._id})
+    return  res.render("profile",{books:books, email, username,date})    
  }  catch(err){
     console.log(`error from getprofile \n${err}`)
+    res.status(500).redirect("/500")
  } 
 }

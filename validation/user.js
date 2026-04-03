@@ -31,16 +31,10 @@ confirmpassword:joi.valid(joi.ref("password")).required().messages({
 
 })//end of signup schema
 const signinschema = joi.object({
-   email:joi.string().max(50).pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).required().messages({
-"string.base":"Email must be a string",
-"string.pattern.base":"Email must be a valid email address",
+   email:joi.string().required().messages({
 "any.required":"Email is required"
 }),
-password :joi.string().min(8).max(80).pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,80}$/).required().messages({
-"string.base":"Password must be a string",
-"string.min":"Password must be at least 8 characters long",
-"string.max":"Password must be at most 80 characters long",
-"string.pattern.base":"Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
+password :joi.string().required().messages({
 "any.required":"Password is required"
 })
 })

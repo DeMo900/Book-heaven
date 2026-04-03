@@ -11,6 +11,7 @@ const book = new mongodb.Schema({
   rating : {type : Number  ,default:0, },
   filename:{type : String , unique : true , required : true},
   createdAt : {type:Date , default:Date.now()},
+  publisherId : {type:String , required:true},
 });
 
 const bm = mongodb.model("book", book);

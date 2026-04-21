@@ -1,6 +1,6 @@
 const passport = require("passport");
 const OAuth2Strategy = require("passport-oauth2").Strategy;
-const um = require("/home/adam/coding/Books-collecction/models/user.js");
+const um = require("../models/user.js");
 const emiter = require("../emiter")
 //askingfor the required data
 let page = passport.authenticate("google",{scope:["profile","email"]});

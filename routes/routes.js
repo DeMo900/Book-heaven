@@ -6,11 +6,11 @@ const {body} = require("express-validator")
 const passport = require("passport");
 const OAuth2Strategy = require("passport-oauth2").Strategy;
 //home
-const homecontroller = require("/home/adam/coding/Books-collecction/controllers/home")
+const homecontroller = require("../controllers/home.js")
 //books
-const books = require("/home/adam/coding/Books-collecction/controllers/books.js")
+const books = require("../controllers/books.js")
 //add book
-const addbook = require("/home/adam/coding/Books-collecction/controllers/add-books.js")
+const addbook = require("../controllers/add-books.js")
 //auth
 const { Getsignup , Getsignin , Postsignup , Postsignin , Postforgotpassword , Putupdate , forgotpassword , logout , Getupdate } = require("../controllers/auth");
 //oauth2
@@ -18,7 +18,7 @@ const {page,fail,sucsess} = require("../controllers/oauth2.js")
 //profile
 const profile = require("../controllers/profile.js")
 //errors
-const errors = require("/home/adam/coding/Books-collecction/controllers/errors.js");
+const errors = require("../controllers/errors.js");
 /////////////////////////////////////
 //home
 router.get("/",middlewares.check,homecontroller.Gethome)

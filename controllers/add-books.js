@@ -1,6 +1,6 @@
 
-const bm = require("/home/adam/coding/Books-collecction/models/book.js")
-const um = require("/home/adam/coding/Books-collecction/models/user.js")
+const bm = require("../models/book.js")
+const um = require("../models/user.js")
 const {validationResult} = require("express-validator")
 
 

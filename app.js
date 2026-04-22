@@ -6,12 +6,14 @@ const middlewares = require("./middleware");
 const passport = require("passport");
 const helmet = require("helmet");
 const override = require("method-override");
+const cors = require("cors");
 //router
 const homerouter = require("./routes/routes.js");
 require("dotenv").config();
 //app
 const app = express();
 //middlewares
+app.use(cors({origin:"http://localhost:5173",credentials:true}))
 app.use(middlewares.limit)
 app.use(override("_method"));
 app.use(multer({storage:middlewares.storage,fileFilter:middlewares.filter}).fields([{name:"cover",maxCount:1}

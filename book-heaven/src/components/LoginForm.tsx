@@ -14,7 +14,7 @@ const LoginForm = () => {
    }
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const res = await fetch("https://localhost:9000/login", {
+    const res = await fetch("http://localhost:9000/signin", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

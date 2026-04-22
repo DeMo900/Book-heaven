@@ -2,7 +2,7 @@ import FormHeader from "./FormHeader"
 import Input from "./Input"
 import FormFooter from "./FormFooter"
 import { useState } from "react"
-const Form = () => {
+const LoginForm = () => {
    const [email,setEmail] = useState("");
    const [password,setPassword] = useState("");
    const [error,setError] = useState("");
@@ -32,11 +32,11 @@ const Form = () => {
    }
     return (
         <form onSubmit={handleSubmit}>
-        <FormHeader />
+        <FormHeader title="Welcome Back" description="Enter your credentials to access your library." />
         <Input onChange={handleEmailChange} labelName="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
         <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" />
         <FormFooter instructions="Don't have an account?" buttonText="ENTER HEAVEN" error="error"/>
         </form>
     )
 }
-export default Form   
+export default LoginForm   

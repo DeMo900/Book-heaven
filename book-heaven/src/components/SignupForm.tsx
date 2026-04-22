@@ -43,10 +43,10 @@ const signupForm = ()=>{
     return (
         <form onSubmit={handleSubmit}>
             <FormHeader title="Join the Heaven" description="Enter your details to create your account." />
-            <Input onChange={handleNameChange} labelName="name" labelValue="NAME" type="text" placeholder="name@anthology.com" />
+            <Input onChange={handleNameChange} labelName="name" labelValue="NAME" type="text" placeholder="ex: John cena" />
             <Input onChange={handleEmailChange} labelName="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
             <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" />
-            <Input onChange={handleConfirmPasswordChange} labelName="confirmPassword" labelValue="CONFIRM PASSWORD" type="password" placeholder="••••••••" />
+            <Input onChange={handleConfirmPasswordChange} labelName="confirmPassword" labelValue="CONFIRM PASSWORD" type="password" placeholder="••••••••" showForgotPassword={false}/>
             <FormFooter instructions="Already have an account?" buttonText="JOIN THE HEAVEN" error={error}/>
         </form>
     )

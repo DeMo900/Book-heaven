@@ -34,7 +34,7 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit}>
         <FormHeader title="Welcome Back" description="Enter your credentials to access your library." />
         <Input onChange={handleEmailChange} labelName="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
-        <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" />
+        <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" showForgotPassword={true}/>
         <FormFooter instructions="Don't have an account?" buttonText="ENTER HEAVEN" error="error"/>
         </form>
     )

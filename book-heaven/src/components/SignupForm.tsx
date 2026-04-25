@@ -2,14 +2,16 @@ import FormHeader from "./FormHeader"
 import Input from "./Input"
 import FormFooter from "./FormFooter"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 const signupForm = ()=>{
-    const [name,setName] = useState("");
+    const [username,setUsername] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [confirmPassword,setConfirmPassword] = useState("");
     const [error,setError] = useState("");
+    const navigate = useNavigate()
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
+        setUsername(e.target.value);
     }
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -22,13 +24,13 @@ const signupForm = ()=>{
     }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const res = await fetch("https://localhost:9000/signup", {
+        const res = await fetch("http://localhost:9000/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name,
+                username,
                 email,
                 password,
                 confirmPassword,
@@ -39,6 +41,7 @@ const signupForm = ()=>{
         if(data.error){
             setError(data.error);
         }
+        navigate("/login");
     }
     return (
         <div className="min-h-screen flex w-full items-center gap-16 justify-center">
@@ -46,10 +49,10 @@ const signupForm = ()=>{
         <form onSubmit={handleSubmit}>
             <div className="flex flex-col  items-center gap-4">
             <FormHeader title="Join the Heaven" description="Enter your details to create your account." />
-            <Input onChange={handleNameChange} labelName="name" labelValue="NAME" type="text" placeholder="ex: John cena" />
-            <Input onChange={handleEmailChange} labelName="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
-            <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" />
-            <Input onChange={handleConfirmPasswordChange} labelName="confirmPassword" labelValue="CONFIRM PASSWORD" type="password" placeholder="••••••••" showForgotPassword={false}/>
+            <Input onChange={handleNameChange} labelName="username" labelValue="NAME" type="text" placeholder="ex: John cena" name="username"/>
+            <Input onChange={handleEmailChange} labelName="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" name="email"/>
+            <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" name="password"/>
+            <Input onChange={handleConfirmPasswordChange} labelName="confirmPassword" labelValue="CONFIRM PASSWORD" type="password" placeholder="••••••••" showForgotPassword={false} name="confirmPassword"/>
             <FormFooter instructions="Already have an account?" buttonText="JOIN THE HEAVEN" error={error}/>
             </div>
         </form>

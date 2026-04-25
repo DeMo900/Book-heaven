@@ -2,10 +2,12 @@ import FormHeader from "./FormHeader"
 import Input from "./Input"
 import FormFooter from "./FormFooter"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 const LoginForm = () => {
    const [email,setEmail] = useState("");
    const [password,setPassword] = useState("");
    const [error,setError] = useState("");
+   const navigate = useNavigate()
    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
    }
@@ -14,7 +16,7 @@ const LoginForm = () => {
    }
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const res = await fetch("http://localhost:9000/signin", {
+    const res = await fetch("http://localhost:9000/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -26,9 +28,10 @@ const LoginForm = () => {
     });
     const data = await res.json();
     console.log(data);
-    if(data.errorr){
-        setError(data.errorr);
+    if(data.error){
+        setError(data.error);
     }
+    navigate("/");
    }
     return (
         <div className="min-h-screen flex items-center gap-16  justify-center">
@@ -36,9 +39,9 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit}>
             <div className="flex flex-col items-center gap-6">
         <FormHeader title="Welcome Back" description="Enter your credentials to access your library." />
-        <Input onChange={handleEmailChange} labelName="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
-        <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" showForgotPassword={true}/>
-        <FormFooter instructions="Don't have an account?" buttonText="ENTER HEAVEN" error="error"/>
+        <Input onChange={handleEmailChange} labelName="email" name="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
+        <Input onChange={handlePasswordChange} labelName="password" name="password" labelValue="PASSWORD" type="password" placeholder="••••••••" showForgotPassword={true}/>
+        <FormFooter instructions="Don't have an account?" buttonText="ENTER HEAVEN" error={error}/>
         </div>
         </form>
         </div>

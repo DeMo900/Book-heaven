@@ -6,9 +6,10 @@ interface InputProps {
     placeholder:string;
     showForgotPassword?:boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    name:string;
 }
 
-const Input = ({labelName,labelValue,type,placeholder,showForgotPassword=false,onChange}:InputProps) => {
+const Input = ({labelName,labelValue,type,placeholder,showForgotPassword=false,onChange,name}:InputProps) => {
     const [ishidden,setIsHidden] = useState(true);
     const [isTypePassword,setIsTypePassword] = useState(type);
     const handlePasswordVisibility = () => {
@@ -28,7 +29,7 @@ const Input = ({labelName,labelValue,type,placeholder,showForgotPassword=false,o
         </div>
         <div className="relative w-full">  
             <input className="bg-stone-200 py-3 px-6 w-full h-14 rounded-lg" 
-                type={isTypePassword} placeholder={placeholder} onChange={onChange} />
+                type={isTypePassword} placeholder={placeholder} onChange={onChange} name={labelName}/>
             {type === "password" && labelName === "password" && 
                 <img className="absolute -translate-y-1/2 top-1/2 right-8 cursor-pointer" 
                     onClick={handlePasswordVisibility} 

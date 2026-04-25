@@ -18,17 +18,18 @@ res.render("signin",{error:undefined,body:undefined})
 }
 //POST signup
 exports.Postsignup = async(req,res)=>{
+    console.log("requesteed")
 //validate data
 const {username,email,password} = req.body
 const {error} = validate(req.body,"signup")
 if(error){
-    return res.status(400).render("signup",{error:error.details[0].message,body:req.body})
+    return res.status(400).json({error:error.details[0].message})
 }
 //check if user already exists
 try{
 const user = await um.findOne({email})//finding
 if(user){
-    return res.status(400).render("signup",{error:"User with this email already exists",body:req.body})
+    return res.status(400).json({error:"User with this email already exists"})
 }
 //hasing the password
 const hashedpassword = await bcrypt.hash(password,11)
@@ -38,7 +39,7 @@ return res.redirect("/signin")//redirecting
 //loging the error and redirecting to the error page
 }catch(err){
     console.log(err)
-    return res.status(500).render("500")
+    return res.status(500).json({error:"Internal server error"})
 }
 }
 //POST signin
@@ -46,32 +47,33 @@ exports.Postsignin = async(req,res)=>{
 //validation
 const {email,password} = req.body
 if(!email || !password){
-    return res.status(400).render("signin",{error:"Please fill in all the fields",body:req.body})
+    return res.status(400).json({error:"Please fill in all the fields"})
 }
 //chcking if user exists
 try{
     const user = await um.findOne({email : email})
     if (!user){
-        console.log("Invalid email/password")
-        return res.status(400).render("signin",{error:`Invalid email/password`,body:req.body})
+        console.log("no user was found")
+        return res.status(400).json({error:`Invalid email/password`})
     }
     //checking if password is correct
     const IsPasswordCorrect = await bcrypt.compare(req.body.password,user.password)
     if(!IsPasswordCorrect){
-        console.log("Invalid email/password")
-      return  res.status(400).render("signin",{error:"Invalid email/password",body:req.body})
+        console.log("incorrect password")
+      return  res.status(400).json({error:"Invalid email/password"})
     }
     //sending welcome mail
     emitter.emit("loggedIn",req.body.email,user.username)
     //creating session 
-    req.session.user = {email:req.body.email,
+ req.session.user = {email:req.body.email,
         id:user._id
     }
-    //redirecting
-return res.redirect("/")
+console.log("logged in")
+    return res.json({message:"logged in"})
+   
 }catch(error){
     console.log (error)
-    return res.status(500).render(500)
+    return res.status(500).json({error:"Internal server error"})
 }
 }
 //Getforgotpassword
@@ -85,11 +87,11 @@ const {email} = req.body
 try{
 const results= validationResult(req)
 if(!results.isEmpty()){
- return console.log(results.errors[0].msg)
+ return res.json({error:results.errors[0].msg})
 }
 let isFound = await um.findOne({email})
 if(!isFound){
-  return  console.log("email doesn't exist signup")
+  return  res.json({error:"email doesn't exist signup"})
 }
 //generating code
 let code = crypto.randomBytes(16).toString("hex") 
@@ -115,33 +117,34 @@ let transport = mail.createTransport({//creating transport
 await transport.sendMail({
   to: req.body.email,
   subject: "Here is your url to reset your password", 
-  text: `http://localhost:9000/update-password?code=${code}`, 
+  text: `http://localhost:5173/update-password?code=${code}`, 
 })
-return res.render("signin",{error:"check your email to reset your password",body:{}})
+return res.json({message:"check your email to reset your password"})
 }catch(err){//handling errors
     console.log(err)
-    return res.render("500")
+    return res.json({error:"Internal server error"})
 }
 }
 //Getupdate
 exports.Getupdate = async (req,res)=>{
 const token = await tm.findOne({token:req.query.code})
 if(!token){
-return res.send("error invalid code")
+return res.json({error:"invalid code"})
 }
 console.log(token.email)
-res.render("update-password",{error:"",email:token.email})//sending the email to the front end
+res.json({email:token.email})//sending the email to the front end
 }
 //updating password
 exports.Putupdate = async(req,res)=>{
     console.log("sent")
 const {email} = req.body
 console.log(email)
+console.log(req.body.password)
 try{
 //validating password
 const results = validationResult(req)
 if(!results.isEmpty()){
-    return res.status(400).render("update-password",{error:results.errors[0].msg, email:email})
+    return res.status(400).json({error:results.errors[0].msg})
 }
 //hashing the new passwordz
 let hashedpassword = await bcrypt.hash(req.body.password,11)
@@ -150,10 +153,10 @@ await um.updateOne({email},{$set:{password:hashedpassword}})
 //deleting the token
 await tm.deleteOne({email})
 //
-return res.redirect("/signin")//redirecting to signin
+return res.json({message:"password updated successfully"})//redirecting to signin
 }catch(error){
     console.log(`error while updating password ${error}`)
-    return res.status(500).render("500")
+    return res.status(500).json({error:"Internal server error"})
 }
 }
 

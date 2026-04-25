@@ -42,7 +42,7 @@ router.get("/signin",Getsignin)
 router.get("/update-password",Getupdate)
 router.get("/forgot-password",forgotpassword)
 router.post("/signup",Postsignup)
-router.post("/signin",Postsignin)
+router.post("/login",Postsignin)
 router.post("/logout",logout)
 router.post("/forgot-password",
     body("email").isEmail().withMessage("email isn't valid")

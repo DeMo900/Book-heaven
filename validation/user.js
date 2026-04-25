@@ -24,7 +24,7 @@ email:joi.string().max(50).pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).required(
 "string.pattern.base":"Email must be a valid email address",
 "any.required":"Email is required"
 }),
-confirmpassword:joi.valid(joi.ref("password")).required().messages({
+confirmPassword:joi.valid(joi.ref("password")).required().messages({
 "any.only":"Confirm Password does not match Password",
 "any.required":"Confirm Password is required"
 })

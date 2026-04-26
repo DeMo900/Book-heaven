@@ -21,23 +21,23 @@ const Input = ({labelName,labelValue,type,placeholder,showForgotPassword=false,o
         }
     }
     return (
-    <div className="w-full">  
-        <div className="flex items-center justify-between w-full">  
-            <label className="block mt-4 text-xs" htmlFor={labelName}>{labelValue}</label>
+    <>  
+        <div className="flex items-center justify-between w-[90%] md:w-full">  
+            <label className="block self-start mt-4 text-xs" htmlFor={labelName}>{labelValue}</label>
             {type === "password" && labelName === "password" && showForgotPassword && 
             <a href="http://localhost:5173/passwordreset">
-                <p className="text-xs text-blue-950 cursor-pointer">Forgot Password?</p>
+                <p className="text-xs text-blue-950 cursor-pointer hover:text-blue-700">Forgot Password?</p>
             </a>}
         </div>
-        <div className="relative w-full">  
-            <input className="bg-stone-200 py-3 mb-4 px-6 w-full h-14 rounded-lg" 
+        <div className="relative flex justify-center w-full">  
+            <input className="bg-stone-200 py-3 px-6 w-[90%] md:w-full h-14 rounded-lg" 
                 type={isTypePassword} placeholder={placeholder} onChange={onChange} name={labelName}/>
             {type === "password" && labelName === "password" && 
                 <img className="absolute -translate-y-1/2 top-1/2 right-8 cursor-pointer" 
                     onClick={handlePasswordVisibility} 
                     src={ishidden ? "hide.svg" : "show.svg"} alt="" />}
         </div>
-    </div>
+    </>
 )
 }
 export default Input

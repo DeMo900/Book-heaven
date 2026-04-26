@@ -53,7 +53,7 @@ const signupForm = ()=>{
             <Input onChange={handleEmailChange} labelName="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" name="email"/>
             <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" name="password"/>
             <Input onChange={handleConfirmPasswordChange} labelName="confirmPassword" labelValue="CONFIRM PASSWORD" type="password" placeholder="••••••••" showForgotPassword={false} name="confirmPassword"/>
-            <FormFooter instructions="Already have an account?" buttonText="JOIN THE HEAVEN" error={error}/>
+            <FormFooter instructions="signup" buttonText="JOIN THE HEAVEN" error={error}/>
             </div>
         </form>
         </div>

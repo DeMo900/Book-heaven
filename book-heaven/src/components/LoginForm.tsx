@@ -42,7 +42,7 @@ const LoginForm = () => {
         <FormHeader title="Welcome Back" description="Enter your credentials to access your library."/>
         <Input onChange={handleEmailChange} labelName="email" name="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
         <Input onChange={handlePasswordChange} labelName="password" name="password" labelValue="PASSWORD" type="password" placeholder="••••••••" showForgotPassword={true}/>
-        <FormFooter instructions="Don't have an account?" buttonText="ENTER HEAVEN" error={error}/>
+        <FormFooter instructions="login" buttonText="ENTER HEAVEN" error={error}/>
         </div>
         </form>
         </div>

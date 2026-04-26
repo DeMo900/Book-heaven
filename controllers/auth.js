@@ -7,6 +7,7 @@ const { body,validationResult } = require("express-validator")
 const mail = require("nodemailer")
 const crypto = require("crypto")
 const emitter = require("../emiter.js")
+const redis = require("../lib/redis/redis")
  require("../emiter.js")
 //GET signup
 exports.Getsignup = (req,res)=>{
@@ -96,15 +97,12 @@ if(!isFound){
 //generating code
 let code = crypto.randomBytes(16).toString("hex") 
 //checking if another token fron the sane user already exists and deleting it
-let existingtoken = await tm.findOne({email})
-if(existingtoken){
-    await tm.deleteOne({email})
+let deletingExistingToken = await redis.del(`token:${email}`)
+if(deletingExistingToken === 1){
+    console.log("deleted existing token")
 }
 //storing the code
-await tm.create({
-    email,
-    token:code
-})
+await redis.set(`token:${email}`,code)
 //sending the email
 let transport = mail.createTransport({//creating transport
     service:"gmail",
@@ -131,7 +129,6 @@ const token = await tm.findOne({token:req.query.code})
 if(!token){
 return res.json({error:"invalid code"})
 }
-console.log(token.email)
 res.json({email:token.email})//sending the email to the front end
 }
 //updating password

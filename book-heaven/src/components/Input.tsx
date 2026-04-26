@@ -25,7 +25,7 @@ const Input = ({labelName,labelValue,type,placeholder,showForgotPassword=false,o
         <div className="flex items-center justify-between w-full">  
             <label className="block mt-4 text-xs" htmlFor={labelName}>{labelValue}</label>
             {type === "password" && labelName === "password" && showForgotPassword && 
-            <a href="http://localhost:5173/forgot-password">
+            <a href="http://localhost:5173/passwordreset">
                 <p className="text-xs text-blue-950 cursor-pointer">Forgot Password?</p>
             </a>}
         </div>

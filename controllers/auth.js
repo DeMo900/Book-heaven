@@ -125,11 +125,11 @@ return res.json({message:"check your email to reset your password"})
 }
 //Getupdate
 exports.Getupdate = async (req,res)=>{
-const token = await tm.findOne({token:req.query.code})
+const token = await redis.get(`token:${req.query.code}`)
 if(!token){
 return res.json({error:"invalid code"})
 }
-res.json({email:token.email})//sending the email to the front end
+res.json({email:token})//sending the email to the front end
 }
 //updating password
 exports.Putupdate = async(req,res)=>{
@@ -148,7 +148,7 @@ let hashedpassword = await bcrypt.hash(req.body.password,11)
 //getting the user
 await um.updateOne({email},{$set:{password:hashedpassword}})
 //deleting the token
-await tm.deleteOne({email})
+await redis.del(`token:${email}`)
 //
 return res.json({message:"password updated successfully"})//redirecting to signin
 }catch(error){

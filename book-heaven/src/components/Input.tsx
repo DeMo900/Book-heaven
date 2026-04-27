@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 interface InputProps {
     labelName:string;
     labelValue:string;
@@ -22,10 +23,11 @@ const Input = ({labelName,labelValue,type,placeholder,showForgotPassword=false,o
         <div className="relative flex justify-center w-full">  
             <input className="bg-stone-200 py-3 px-6 w-[90%] md:w-full h-14 rounded-lg" 
                 type={ishidden ? type : "text"} placeholder={placeholder} onChange={onChange} name={labelName}/>
-            {type === "password" && labelName === "password" && 
-                <img className="absolute -translate-y-1/2 top-1/2 right-8 cursor-pointer" 
-                    onClick={() => setIsHidden(!ishidden)} 
-                    src={ishidden ? "hide.svg" : "show.svg"} alt="" />}
+         {type === "password" && labelName === "password" && (
+  ishidden 
+    ? <EyeOff className="absolute -translate-y-1/2 top-1/2 right-8 cursor-pointer" onClick={() => setIsHidden(!ishidden)} /> 
+    : <Eye className="absolute -translate-y-1/2 top-1/2 right-8 cursor-pointer" onClick={() => setIsHidden(!ishidden)} />
+)}
         </div>
     </>
 )

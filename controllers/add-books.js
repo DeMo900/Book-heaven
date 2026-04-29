@@ -22,7 +22,6 @@ console.log(req.body)
 if(!results.isEmpty()){
     console.log(results.array())
   return  res.render("add-book",{error:results.array(),body:req.body})
-   // return res.status(422).render("add-book",{errors:results.array()})
 }
  if (!cover){
     return res.render("add-book",{error:[{msg:"cover image is required"}],body:req.body})
@@ -43,6 +42,7 @@ let user = await um.findById(req.session.user.id)
 user.books.push(newbm._id)
 await user.save()
 console.log(`book created successfully`)
+res.json({message:"book was added"})
     }catch(err){
         console.log(`error from createbook \n${err}`)
         res.status(500).redirect("/500")

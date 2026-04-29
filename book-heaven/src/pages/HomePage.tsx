@@ -1,7 +1,31 @@
 import Navbar from "../components/Navbar";
 import BottomNavBar from "../components/BottomNavBar";
 import BookCard from "../components/BookCard";
+import {useEffect,useState} from "react"
+interface book {
+    title :string,
+    author : string,
+    coverurl : string
+}
 const HomePage = () => {
+  const [booksArray, setBooksArray] = useState<book[]>([]); 
+ useEffect(()=>{
+(async()=>{
+    try{
+const fetchBooks = await fetch("http://localhost:9000/books",{
+    credentials:"include"
+})
+const books = await fetchBooks.json()
+
+    console.log(books.books)
+    setBooksArray(books.books)
+
+    }catch(error){
+        console.log(error)
+    }
+})()
+ },[])
+ console.log(`array in state:${booksArray}`)
     return (
         <div className="min-h-screen ">
             <Navbar />
@@ -19,25 +43,26 @@ const HomePage = () => {
                 </div>
                 <div className="flex flex-col gap-4 ml-4 ">
                     <h1 className="text-[#002542] font-[Playfair_Display] text-3xl">Explore Genres</h1>
-                    <div className="flex flex-wrap justify-between  ">
+                    <div className="flex flex-wrap justify-between ">
 <div className="flex gap-2 items-center">
-    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8> ">Poetry</div>
-        <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8> ">fiction</div>
-    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8> ">history</div>
-    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8> ">science</div>
-    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8> ">biography</div>
+    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8">Poetry</div>
+        <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ">fiction</div>
+    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ">history</div>
+    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ">science</div>
+    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ">biography</div>
 
 </div>
 <button className="bg-[#002542] text-white px-4 py-2 mr-8 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">Publish a Book</button>
                     </div>
+
                     <div className=" flex flex-wrap justify-center gap-4 md:justify-start pb-24">
-                    <BookCard image="https://lh3.googleusercontent.com/aida-public/AB6AXuBdvVtcv-t591bg0OLVbjDha1eNlEjuxP1RnrQ9Bz4yk3Apfi5Xkvb4W52yO2-ZkyCFzkf3w3d4YJQvv22TReXXP1fWYpHR71sdvr7_43vukeyyLBTO5REK4xaW2_IJcCOHoPDrp_NFSeQGTnZPBkSEx9_DxnvNFhaDrV1okf6NxOaJFBU1ntiYYMG9j-b5uHuVZ1FUJMtMiDOorINX-nr__hMez8BDCN8h4Hd8uoFet5SrSdAZSH92fWpQwo8uE1mHDEHCE83geeFd" title="Whispers of the Ancient Willow" author="John Doe" isLiked={false} />
-                    <BookCard image="https://lh3.googleusercontent.com/aida-public/AB6AXuBdvVtcv-t591bg0OLVbjDha1eNlEjuxP1RnrQ9Bz4yk3Apfi5Xkvb4W52yO2-ZkyCFzkf3w3d4YJQvv22TReXXP1fWYpHR71sdvr7_43vukeyyLBTO5REK4xaW2_IJcCOHoPDrp_NFSeQGTnZPBkSEx9_DxnvNFhaDrV1okf6NxOaJFBU1ntiYYMG9j-b5uHuVZ1FUJMtMiDOorINX-nr__hMez8BDCN8h4Hd8uoFet5SrSdAZSH92fWpQwo8uE1mHDEHCE83geeFd" title="Whispers of the Ancient Willow" author="John Doe" isLiked={false} />
-                    <BookCard image="https://lh3.googleusercontent.com/aida-public/AB6AXuBdvVtcv-t591bg0OLVbjDha1eNlEjuxP1RnrQ9Bz4yk3Apfi5Xkvb4W52yO2-ZkyCFzkf3w3d4YJQvv22TReXXP1fWYpHR71sdvr7_43vukeyyLBTO5REK4xaW2_IJcCOHoPDrp_NFSeQGTnZPBkSEx9_DxnvNFhaDrV1okf6NxOaJFBU1ntiYYMG9j-b5uHuVZ1FUJMtMiDOorINX-nr__hMez8BDCN8h4Hd8uoFet5SrSdAZSH92fWpQwo8uE1mHDEHCE83geeFd" title="Whispers of the Ancient Willow" author="John Doe" isLiked={false} />
-                    <BookCard image="https://lh3.googleusercontent.com/aida-public/AB6AXuBdvVtcv-t591bg0OLVbjDha1eNlEjuxP1RnrQ9Bz4yk3Apfi5Xkvb4W52yO2-ZkyCFzkf3w3d4YJQvv22TReXXP1fWYpHR71sdvr7_43vukeyyLBTO5REK4xaW2_IJcCOHoPDrp_NFSeQGTnZPBkSEx9_DxnvNFhaDrV1okf6NxOaJFBU1ntiYYMG9j-b5uHuVZ1FUJMtMiDOorINX-nr__hMez8BDCN8h4Hd8uoFet5SrSdAZSH92fWpQwo8uE1mHDEHCE83geeFd" title="Whispers of the Ancient Willow" author="John Doe" isLiked={false} />
-                    <BookCard image="https://lh3.googleusercontent.com/aida-public/AB6AXuBdvVtcv-t591bg0OLVbjDha1eNlEjuxP1RnrQ9Bz4yk3Apfi5Xkvb4W52yO2-ZkyCFzkf3w3d4YJQvv22TReXXP1fWYpHR71sdvr7_43vukeyyLBTO5REK4xaW2_IJcCOHoPDrp_NFSeQGTnZPBkSEx9_DxnvNFhaDrV1okf6NxOaJFBU1ntiYYMG9j-b5uHuVZ1FUJMtMiDOorINX-nr__hMez8BDCN8h4Hd8uoFet5SrSdAZSH92fWpQwo8uE1mHDEHCE83geeFd" title="Whispers of the Ancient Willow" author="John Doe" isLiked={false} />
-                    <BookCard image="https://lh3.googleusercontent.com/aida-public/AB6AXuBdvVtcv-t591bg0OLVbjDha1eNlEjuxP1RnrQ9Bz4yk3Apfi5Xkvb4W52yO2-ZkyCFzkf3w3d4YJQvv22TReXXP1fWYpHR71sdvr7_43vukeyyLBTO5REK4xaW2_IJcCOHoPDrp_NFSeQGTnZPBkSEx9_DxnvNFhaDrV1okf6NxOaJFBU1ntiYYMG9j-b5uHuVZ1FUJMtMiDOorINX-nr__hMez8BDCN8h4Hd8uoFet5SrSdAZSH92fWpQwo8uE1mHDEHCE83geeFd" title="Whispers of the Ancient Willow" author="John Doe" isLiked={false} />
-                </div>
+                    
+                                   {booksArray.map((book,index) => (
+                    <BookCard key={index} image={"./uploads"+book.coverurl} title={book.title} author={book.author} isLiked={false} />
+  
+))}
+
+            </div>
                 </div>
             <BottomNavBar />
         </div>

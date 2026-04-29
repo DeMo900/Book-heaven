@@ -69,6 +69,7 @@ try{
  req.session.user = {email:req.body.email,
         id:user._id
     }
+    console.log(req.session.user)
 console.log("logged in")
     return res.json({message:"logged in"})
    

@@ -17,6 +17,7 @@ const LoginForm = () => {
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const res = await fetch("http://localhost:9000/login", {
+        credentials:"include",
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -40,8 +41,8 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit}>
             <div className="flex flex-col items-center">
         <FormHeader title="Welcome Back" description="Enter your credentials to access your library."/>
-        <Input onChange={handleEmailChange} labelName="email" name="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
-        <Input onChange={handlePasswordChange} labelName="password" name="password" labelValue="PASSWORD" type="password" placeholder="••••••••" showForgotPassword={true}/>
+        <Input onChange={handleEmailChange} labelName="email" labelValue="EMAIL ADDRESS" type="email" placeholder="name@anthology.com" />
+        <Input onChange={handlePasswordChange} labelName="password" labelValue="PASSWORD" type="password" placeholder="••••••••" showForgotPassword={true}/>
         <FormFooter instructions="login" buttonText="ENTER HEAVEN" error={error}/>
         </div>
         </form>

@@ -7,18 +7,17 @@ const um = require("../models/user.js")
     //checking if genre exists
     if(req.query.genre){
       //getting and rendering the filtered books with the picked genre
-    let filterdata = await bm.find({genre:req.query.genre})
+    const filterdata = await bm.find({genre:req.query.genre})
     console.log(filterdata)
    return res.render("books",{data:filterdata,query:""})
     }
     //if not get and render all boks 
-      let books = await bm.find()
-
+      const books = await bm.find()
     //getting user
-      let user = await um.findOne({_id:req.session.user.id})
+    const user = await um.findOne({_id:req.session.user.id})
      let populatedbooks = await user.populate("staredbooks")
         let staredbooks = populatedbooks.staredbooks
-       return res.render("books",{data:books,staredbooks})
+       return res.json({books})
   }catch(err){
     console.log(`error from Getbooks \n${err}`)
     res.status(500).redirect("/500")

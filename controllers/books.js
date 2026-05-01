@@ -16,8 +16,8 @@ const um = require("../models/user.js")
     //getting user
     const user = await um.findOne({_id:req.session.user.id})
      let populatedbooks = await user.populate("staredbooks")
-        let staredbooks = populatedbooks.staredbooks
-       return res.json({books})
+        let staredBooksArray = populatedbooks.staredbooks
+       return res.json({books,staredBooksArray})
   }catch(err){
     console.log(`error from Getbooks \n${err}`)
     res.status(500).redirect("/500")
@@ -48,7 +48,6 @@ exports.star = async(req,res)=>{
     let {title,stared} = req.query
     //getting user
    let user = await um.findOne({email:req.session.user.email})
-    console.log(user)
     //geting book
 let book = await bm.findOne({title:title})
 //stared
@@ -57,12 +56,12 @@ if(stared === "true"){
 await book.save()
 user.staredbooks.push(book._id)
 await user.save()
-  //unstared
-}else if(stared === "false"){
+return res.status(200)
+}
   await bm.updateOne({title:title},{$inc:{rating:-1}})
  user.staredbooks.pull(book._id)
 await user.save()
-}
+return res.status(200)
   }catch(err){
     console.log(`error while staring ${err}`)
     return res.status(500).render("500")

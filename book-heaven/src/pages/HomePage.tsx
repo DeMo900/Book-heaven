@@ -1,7 +1,8 @@
 import Navbar from "../components/Navbar";
 import BottomNavBar from "../components/BottomNavBar";
 import BookCard from "../components/BookCard";
-import {useEffect,useState} from "react"
+import LoadingSquare from "../components/Loading";
+import {useEffect,useState} from "react";
 interface book {
     title :string,
     author : string,
@@ -10,17 +11,20 @@ interface book {
 const HomePage = () => {
   const [booksArray, setBooksArray] = useState<book[]>([]); 
   const [staredBooksArray, setStaredBooksArray] = useState([])
+  const [isLoading,setLoading] = useState(false)
  useEffect(()=>{
 (async()=>{
     try{
+    setLoading(true)
 const fetchBooks = await fetch("http://localhost:9000/books",{
     credentials:"include"
 })
-const books = await fetchBooks.json()
+const response = await fetchBooks.json()
 
-    console.log(books.books)
-    setBooksArray(books.books)
-setStaredBooksArray(books.staredBooksArray)
+    setBooksArray(response.books)
+setStaredBooksArray(response.staredBooksArray)
+setLoading(false)
+
     }catch(error){
         console.log(error)
     }
@@ -58,12 +62,11 @@ setStaredBooksArray(books.staredBooksArray)
                     </div>
 
                     <div className=" flex flex-wrap justify-center gap-4 md:justify-start pb-24">
-                    <BookCard  image="https://lh3.googleusercontent.com/aida-public/AB6AXuBdvVtcv-t591bg0OLVbjDha1eNlEjuxP1RnrQ9Bz4yk3Apfi5Xkvb4W52yO2-ZkyCFzkf3w3d4YJQvv22TReXXP1fWYpHR71sdvr7_43vukeyyLBTO5REK4xaW2_IJcCOHoPDrp_NFSeQGTnZPBkSEx9_DxnvNFhaDrV1okf6NxOaJFBU1ntiYYMG9j-b5uHuVZ1FUJMtMiDOorINX-nr__hMez8BDCN8h4Hd8uoFet5SrSdAZSH92fWpQwo8uE1mHDEHCE83geeFd" title="test" author="tester" isLiked={false} />
-                    
-                                   {booksArray.map((book,index) => (
-                    <BookCard key={index} image={"http://localhost:9000/uploads/"+book.coverurl} title={book.title} author={book.author} isLiked={staredBooksArray.some((el)=> el.title === book.title)} />
-  
+                   {isLoading ? <LoadingSquare/> : booksArray.map((book, index) => (
+  <BookCard key={index} image={"http://localhost:9000/uploads/" + book.coverurl} title={book.title} author={book.author} isLiked={staredBooksArray.some((el) => el.title === book.title)} />
 ))}
+
+                                
 
             </div>
                 </div>

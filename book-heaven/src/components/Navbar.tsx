@@ -1,7 +1,7 @@
-import Search from "./search";
+import Search from "./Search";
 import { UserCircle } from "lucide-react";
 import {useLocation} from "react-router-dom";
-const Navbar = () => {
+const Navbar = ({onChange}) => {
     const location = useLocation();
 
     return (
@@ -12,7 +12,7 @@ const Navbar = () => {
     <a href="/"><li className = {`${location.pathname === "/" ? "text-[#002542] font-bold border-b-black border-b-2": "text-slate-500 "} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Discover</li></a>
     <a href="/cruated"><li className={`${location.pathname === "/cruated" ? "text-[#002542]" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Cruated</li></a>
 </ul>
-<Search />
+<Search onChange = {onChange} />
 <UserCircle className="w-14 h-14 text-slate-700 hover:text-slate-500 transition-colors duration-200 hidden md:block" />
         </div>
     )

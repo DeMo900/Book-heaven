@@ -28,12 +28,12 @@ exports.searchbook = async(req,res)=>{
  
   try{
 //find a booke that matches the title or genre
-let book = await bm.find({$or:[{title:{$regex:req.query.value,$options:"i" }},
+let books = await bm.find({$or:[{title:{$regex:req.query.value,$options:"i" }},
   {genre:{$regex:req.query.value,$options:"i" }}]})
 
 //returning the data in json
 return res.json({
-  book
+  books
 })
 //catching errors
   }catch(err){  

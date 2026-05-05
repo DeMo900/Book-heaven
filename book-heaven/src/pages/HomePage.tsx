@@ -12,8 +12,8 @@ const HomePage = () => {
   const [booksArray, setBooksArray] = useState<book[]>([]); 
   const [staredBooksArray, setStaredBooksArray] = useState([])
   const [isLoading,setLoading] = useState(false)
- useEffect(()=>{
-(async()=>{
+  const [searchValue,setSearchValue] = useState("")
+  const fetchAll = async()=>{
     try{
     setLoading(true)
 const fetchBooks = await fetch("http://localhost:9000/books",{
@@ -28,13 +28,33 @@ setLoading(false)
     }catch(error){
         console.log(error)
     }
-})()
- },[])
+ }
+  useEffect(()=>{
+    if(searchValue === ""){
+        fetchAll()
+    }
+  (async()=>{
+    try{
+const fetchSearchedBook = await fetch(`http://localhost:9000/books/search?value=${encodeURIComponent(searchValue)}`,{
+    method :"POST",
+    credentials:"include"
+})
+const response = await fetchSearchedBook.json()
+if(response){
+setBooksArray(response.books)
+}
+    }catch(err){
+        console.log(`error while searchng ${err}`)
+    }
+    })()
+
+  },[searchValue])
+ 
  console.log(`starred books : ${staredBooksArray}`)
  console.log(`array in state:${booksArray}`)
     return (
         <div className="min-h-screen ">
-            <Navbar />
+            <Navbar onChange={(e)=>setSearchValue(e.target.value)} />
             <div className=" md:flex flex flex-col-reverse  md:flex-row justify-between pt-32 pb-10 px-10   ">
 <div className="flex flex-col">
 <h1 className="text-left text-[#486459] mt-16 md:mt-0 font-stretch-90% font-bold text-xl">Featured Narrative</h1>

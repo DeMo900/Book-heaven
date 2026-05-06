@@ -27,13 +27,18 @@ const um = require("../models/user.js")
 exports.searchbook = async(req,res)=>{
  
   try{
+    //getting user 
+      const user = await um.findOne({_id:req.session.user.id})
+      //populating
+     let populatedbooks = await user.populate("staredbooks")
+        let staredBooksArray = populatedbooks.staredbooks
 //find a booke that matches the title or genre
 let books = await bm.find({$or:[{title:{$regex:req.query.value,$options:"i" }},
   {genre:{$regex:req.query.value,$options:"i" }}]})
-
 //returning the data in json
 return res.json({
-  books
+  books,
+  staredBooksArray
 })
 //catching errors
   }catch(err){  

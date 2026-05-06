@@ -32,6 +32,7 @@ setLoading(false)
   useEffect(()=>{
     if(searchValue === ""){
         fetchAll()
+        return
     }
   (async()=>{
     try{
@@ -49,9 +50,10 @@ setBooksArray(response.books)
     })()
 
   },[searchValue])
- 
- console.log(`starred books : ${staredBooksArray}`)
- console.log(`array in state:${booksArray}`)
+const sum = staredBooksArray.some((el)=>{
+    return booksArray[0].title === el.title
+})
+console.log(sum)
     return (
         <div className="min-h-screen ">
             <Navbar onChange={(e)=>setSearchValue(e.target.value)} />

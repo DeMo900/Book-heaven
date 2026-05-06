@@ -7,6 +7,7 @@ interface BookCardProps{
     author:string;
     isLiked:boolean;
 }
+
 const BookCard = ({image,title,author,isLiked}:BookCardProps) => {
     const [liked,setLiked] = useState(isLiked);
 const handleLikeClick = async()=>{
@@ -17,6 +18,9 @@ const handleLikeClick = async()=>{
         credentials:"include"
     })
 }
+useEffect(() => {
+    setLiked(isLiked)
+}, [isLiked])
     return (
         <div className="flex flex-col w-[250px] group">
             <div className="relative">

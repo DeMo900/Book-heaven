@@ -3,6 +3,7 @@ import BottomNavBar from "../components/BottomNavBar";
 import BookCard from "../components/BookCard";
 import LoadingSquare from "../components/Loading";
 import {useEffect,useState} from "react";
+import {useDebounce} from "react-use";
 interface book {
     title :string,
     author : string,
@@ -10,9 +11,11 @@ interface book {
 }
 const HomePage = () => {
   const [booksArray, setBooksArray] = useState<book[]>([]); 
-  const [staredBooksArray, setStaredBooksArray] = useState([])
-  const [isLoading,setLoading] = useState(false)
-  const [searchValue,setSearchValue] = useState("")
+  const [staredBooksArray, setStaredBooksArray] = useState([]);
+  const [isLoading,setLoading] = useState(false);
+  const [searchValue,setSearchValue] = useState("");
+ const [debaunceValue,setDebaunceValue] = useState("")
+useDebounce(() => setDebaunceValue(searchValue), 4000, [searchValue])
   const fetchAll = async()=>{
     try{
     setLoading(true)
@@ -49,7 +52,7 @@ setBooksArray(response.books)
     }
     })()
 
-  },[searchValue])
+  },[debaunceValue])
 const sum = staredBooksArray.some((el)=>{
     return booksArray[0].title === el.title
 })

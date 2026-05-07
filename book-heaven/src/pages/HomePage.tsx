@@ -15,7 +15,7 @@ const HomePage = () => {
   const [isLoading,setLoading] = useState(false);
   const [searchValue,setSearchValue] = useState("");
  const [debaunceValue,setDebaunceValue] = useState("")
-useDebounce(() => setDebaunceValue(searchValue), 4000, [searchValue])
+useDebounce(() => setDebaunceValue(searchValue),600, [searchValue])
   const fetchAll = async()=>{
     try{
     setLoading(true)
@@ -39,6 +39,7 @@ setLoading(false)
     }
   (async()=>{
     try{
+        setLoading(true)
 const fetchSearchedBook = await fetch(`http://localhost:9000/books/search?value=${encodeURIComponent(searchValue)}`,{
     method :"POST",
     credentials:"include"
@@ -49,6 +50,8 @@ setBooksArray(response.books)
 }
     }catch(err){
         console.log(`error while searchng ${err}`)
+    }finally{
+        setLoading(false)
     }
     })()
 

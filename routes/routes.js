@@ -24,6 +24,7 @@ const errors = require("../controllers/errors.js");
 router.get("/",middlewares.check,homecontroller.Gethome)
 //books
 router.get("/books",middlewares.check,books.Getbooks)
+router.get("/trend-book",books.GetTrendBook)
 router.post("/books/search",middlewares.check,books.searchbook)
 router.put("/books",books.star)
 //add book

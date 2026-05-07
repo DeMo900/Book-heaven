@@ -23,6 +23,22 @@ const um = require("../models/user.js")
     res.status(500).redirect("/500")
   }
 }
+exports.GetTrendBook = async(req,res)=>{
+  try{
+    //getting the trend book
+ const book = await bm.find().sort({title:-1}) 
+ console.log(book[0])
+ //sending the book
+ return res.status(200).json({
+  book:book[0]
+ })
+  }catch(err){
+    res.json({
+      err
+    })
+    return console.log(`error from getting the trend book ${err}`)
+  }
+}
 //searching
 exports.searchbook = async(req,res)=>{
  

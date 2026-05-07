@@ -76,8 +76,8 @@ console.log(sum)
 <p className="text-[#486459] font-[Inter] text-md md:text-2xl md:max-w-2xl md:leading-10 mb-8"> {trendBook?.desc} </p>
 <div className="flex gap-4 ">
     <button className="bg-[#002542] text-white px-8 py-4 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">Read Now</button>
-    <button className="bg-[#FBF9F5] text-[#002542] px-8 py-4 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">Add to library</button>
-</div>
+    <button className="bg-[#FBF9F5] text-[#002542] px-8 py-4 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">{staredBooksArray.some((book)=>book.title === trendBook?.title)?"View in library":"Add to library"}</button>
+</div>  
                 </div>
                 <img className="w-full md:w-[490px] border-l-4 border-l-amber-950 md:h-[110vh] h-[50vh] object-cover rounded-xl " src={"http://localhost:9000/uploads/"+trendBook?.coverurl} alt="" />
                 </div>

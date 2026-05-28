@@ -6,7 +6,7 @@ interface InputProps {
     type:string;
     placeholder:string;
     showForgotPassword?:boolean;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = ({labelName,labelValue,type,placeholder,showForgotPassword=false,onChange}:InputProps) => {

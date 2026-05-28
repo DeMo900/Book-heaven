@@ -17,6 +17,7 @@ const HomePage = () => {
   const [isLoading,setLoading] = useState(false);
   const [searchValue,setSearchValue] = useState("");
  const [debaunceValue,setDebaunceValue] = useState("")
+ const [genre,setGenre] = useState("")
 useDebounce(() => setDebaunceValue(searchValue),600, [searchValue])
   const fetchAll = async()=>{
     try{
@@ -51,9 +52,12 @@ const fetchSearchedBook = await fetch(`http://localhost:9000/books/search?value=
     credentials:"include"
 })
 const response = await fetchSearchedBook.json()
-if(response){
+if(response.books.length !== 0){
 setBooksArray(response.books)
+}else{
+    setBooksArray([])
 }
+setStaredBooksArray(response.staredBooksArray)
     }catch(err){
         console.log(`error while searchng ${err}`)
     }finally{
@@ -62,10 +66,28 @@ setBooksArray(response.books)
     })()
 
   },[debaunceValue])
-const sum = staredBooksArray.some((el)=>{
-    return booksArray[0].title === el.title
-})
-console.log(sum)
+  const fetchStared = async () => {
+  const res = await fetch("http://localhost:9000/books", { credentials: "include" })
+  const data = await res.json()
+  setStaredBooksArray(data.staredBooksArray)
+}
+const handleBookLikeClick = async(title:string,newLiked:boolean)=>{
+   await fetch (`http://localhost:9000/books?stared=${newLiked}&title=${encodeURIComponent(title)}`,{
+        method:"PUT",
+        credentials:"include"
+   })
+   console.log("updating")
+fetchStared()
+}
+useEffect(()=>{
+    (async()=>{
+     const res = await fetch(`http://localhost:9000/books?genre=${genre}`, { credentials: "include" })
+  const data = await res.json()
+  console.log(data)
+  setBooksArray(data.books)
+  setStaredBooksArray(data.staredBooksArray)
+    })()
+},[genre])
     return (
         <div className="min-h-screen ">
             <Navbar onChange={(e)=>setSearchValue(e.target.value)} />
@@ -85,11 +107,11 @@ console.log(sum)
                     <h1 className="text-[#002542] font-[Playfair_Display] text-3xl">Explore Genres</h1>
                     <div className="flex flex-wrap justify-between ">
 <div className="flex gap-2 items-center">
-    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8">Poetry</div>
-        <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ">fiction</div>
-    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ">history</div>
-    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ">science</div>
-    <div className="text-[#486459] font-[Inter] text-md bg-stone-400/60 hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ">biography</div>
+    <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "Poetry" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("Poetry")}>Poetry</div>
+        <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "Fiction" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("Fiction")}>fiction</div>
+    <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "History" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("History")}>history</div>
+    <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "Science" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("Science")}>science</div>
+    <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "Biography" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("Biography")}>biography</div>
 
 </div>
 <button className="bg-[#002542] text-white px-4 py-2 mr-8 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">Publish a Book</button>
@@ -97,7 +119,7 @@ console.log(sum)
 
                     <div className=" flex flex-wrap justify-center gap-4 md:justify-start pb-24">
                    {isLoading ? <LoadingSquare/> : booksArray.map((book, index) => (
-  <BookCard key={index} image={"http://localhost:9000/uploads/" + book.coverurl} title={book.title} author={book.author} isLiked={staredBooksArray.some((el) => el.title === book.title)} />
+  <BookCard key={index} handleBookLikeClick={handleBookLikeClick} image={"http://localhost:9000/uploads/" + book.coverurl} title={book.title} author={book.author} isLiked={staredBooksArray.some((el) => el.title === book.title)} />
 ))}
 
                                 

@@ -4,19 +4,17 @@ const um = require("../models/user.js")
 //getting books
  exports.Getbooks = async(req,res)=>{
   try{
+    const user = await um.findOne({_id:req.session.user.id})
+    let populatedbooks = await user.populate("staredbooks")
+    let staredBooksArray = populatedbooks.staredbooks
     //checking if genre exists
     if(req.query.genre){
       //getting and rendering the filtered books with the picked genre
     const filterdata = await bm.find({genre:req.query.genre})
-    console.log(filterdata)
-   return res.render("books",{data:filterdata,query:""})
+        return res.json({books:filterdata,staredBooksArray})
     }
     //if not get and render all boks 
       const books = await bm.find()
-    //getting user
-    const user = await um.findOne({_id:req.session.user.id})
-     let populatedbooks = await user.populate("staredbooks")
-        let staredBooksArray = populatedbooks.staredbooks
        return res.json({books,staredBooksArray})
   }catch(err){
     console.log(`error from Getbooks \n${err}`)
@@ -77,12 +75,12 @@ if(stared === "true"){
 await book.save()
 user.staredbooks.push(book._id)
 await user.save()
-return res.status(200)
+return res.status(200).json({ success: true })
 }
   await bm.updateOne({title:title},{$inc:{rating:-1}})
  user.staredbooks.pull(book._id)
 await user.save()
-return res.status(200)
+return res.status(200).json({ success: true })
   }catch(err){
     console.log(`error while staring ${err}`)
     return res.status(500).render("500")

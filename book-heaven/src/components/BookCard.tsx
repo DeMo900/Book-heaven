@@ -6,17 +6,15 @@ interface BookCardProps{
     title:string;
     author:string;
     isLiked:boolean;
+    handleBookLikeClick: (title:string,newLiked:boolean)=>void;
 }
 
-const BookCard = ({image,title,author,isLiked}:BookCardProps) => {
+const BookCard = ({image,title,author,isLiked,handleBookLikeClick}:BookCardProps) => {
     const [liked,setLiked] = useState(isLiked);
 const handleLikeClick = async()=>{
      const newLiked = !liked;
   setLiked(newLiked);
-    await fetch (`http://localhost:9000/books?stared=${newLiked}&title=${encodeURIComponent(title)}`,{
-        method:"PUT",
-        credentials:"include"
-    })
+   handleBookLikeClick(title,newLiked)
 }
 useEffect(() => {
     setLiked(isLiked)

@@ -10,7 +10,9 @@ const FormFooter = ({instructions,buttonText,error}:FormFooterProps) => {
             return <a href="/signup">Don't have an account?</a>
          }else if (instructions === "signup"){
             return <a href="/login">Already have an account?</a>
-         } else{
+         }else if (instructions === ""){
+            return
+         }else{
             return <a href="/login">back to login</a>
          }  
         }

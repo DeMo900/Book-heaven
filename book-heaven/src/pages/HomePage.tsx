@@ -105,16 +105,21 @@ useEffect(()=>{
                 </div>
                 <div className="flex flex-col gap-4 ml-4 ">
                     <h1 className="text-[#002542] font-[Playfair_Display] text-3xl">Explore Genres</h1>
-                    <div className="flex flex-wrap justify-between ">
-<div className="flex gap-2 items-center">
-    <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "Poetry" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("Poetry")}>Poetry</div>
-        <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "Fiction" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("Fiction")}>fiction</div>
-    <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "History" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("History")}>history</div>
-    <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "Science" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("Science")}>science</div>
-    <div className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl mb-8 ${genre === "Biography" ? "bg-green-400/50" : " bg-stone-200"}`} onClick={()=>setGenre("Biography")}>biography</div>
-
-</div>
-<button className="bg-[#002542] text-white px-4 py-2 mr-8 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">Publish a Book</button>
+                    <div className="flex flex-wrap justify-between items-center gap-4">
+                      <div className="flex flex-wrap gap-2 items-center">
+                        {["Fiction", "Non-Fiction", "Fantasy", "Science Fiction", "Romance", "Thriller", "Mystery", "Biography", "Self-Help", "History", "Poetry"].map((g) => (
+                          <div
+                            key={g}
+                            className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl md:mb-8  ${genre === g ? "bg-green-400/50" : " bg-stone-200"}`}
+                            onClick={() => setGenre(genre === g ? "" : g)}
+                          >
+                            {g}
+                          </div>
+                        ))}
+                      </div>
+                      <a href="/add-book" className="mb-8">
+                        <button className="bg-[#002542] text-white px-4 py-2 mr-8 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">Publish a Book</button>
+                      </a>
                     </div>
 
                     <div className=" flex flex-wrap justify-center gap-4 md:justify-start pb-24">

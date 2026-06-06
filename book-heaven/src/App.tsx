@@ -5,7 +5,8 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import ResetPassword from "./pages/ResetPassword"
 import HomePage from "./pages/HomePage"
 import AddBook from "./pages/AddBookPage"
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import BookPage from "./pages/Book"
+import { Routes, Route } from 'react-router-dom'
 const App = () => {
   return (
     <Routes>
@@ -15,6 +16,7 @@ const App = () => {
 <Route path="/passwordreset" element={<ForgotPasswordPage />} />
 <Route path="/update-password" element={<ResetPassword />} />
 <Route path="/add-book" element={<AddBook />} />
+<Route path="/book/:title" element={<BookPage />} />
     </Routes>
   )
 }

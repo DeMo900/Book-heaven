@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "buildCommand": "cd book-heaven && npm install && npm run build",
+  "outputDirectory": "book-heaven/dist"
+}

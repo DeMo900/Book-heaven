@@ -30,12 +30,13 @@ router.put("/books",books.star)
 //add book
 router.get("/books/add-book",addbook.Getaddbook)
 router.post("/books/add-book",
-body("title").notEmpty().isLength({min:4,max:80}).withMessage("you should type atleast 4 letters in title :("),
-body("author").isLength({max:25}).notEmpty().withMessage("author name is required"),
-body("desc").notEmpty().isLength({min:25,max:500}).withMessage("you should type atleast 25 letters in descreption duh"),
+body("title").notEmpty().withMessage("title is required").isLength({min:4,max:80}).withMessage("you should type atleast 4 letters in title"),
+body("author").isLength({max:50}).notEmpty().withMessage("author name is required"),
+body("desc")
+  .notEmpty().withMessage("description is required")
+  .isLength({min:25, max:500}).withMessage("you should type at least 25 letters in description"),
 body("genre").notEmpty().isIn(["Fiction","Non-Fiction","Fantasy","Science Fiction","Romance","Thriller","Mystery","Biography","Self-Help","History","Poetry"])
 .isLength({min:6 , max:16}).withMessage("please pick a genre"),
-body("publisyear").isLength({max:4}).isNumeric().notEmpty().withMessage("publish year is required"),
 addbook.createbook)
 //signup and signin
 router.get("/signup",Getsignup)

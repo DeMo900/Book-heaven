@@ -10,42 +10,39 @@ res.render("add-book",{error:"",body:""})
 }
 //create book
 exports.createbook = async(req,res)=>{
-    //declaring files
-    let cover = req.files.cover[0].filename
-    let file = req.files.file[0].filename
-
-    //validation
-    try{
-let results = validationResult(req)
-console.log(req.file)
-console.log(req.body)
+     try{
+    let results = validationResult(req)
 if(!results.isEmpty()){
     console.log(results.array())
-  return  res.render("add-book",{error:results.array(),body:req.body})
+  return  res.status(400).json({error:results.array()[0].msg})
 }
- if (!cover){
-    return res.render("add-book",{error:[{msg:"cover image is required"}],body:req.body})
+ //declaring files
+   console.log(req.files)
+   let cover = req.files.cover[0].filename
+    let file = req.files.file[0].filename
+ if (!cover || !file){
+    console.log("no files")
+    return res.status(400).json({error:"cover image and file are required"})
 }
+console.log("Done checking")
 //storing the book  
 let newbm = new bm({
  title : req.body.title,
   author : req.body.author,
   desc : req.body.desc,
   genre : req.body.genre,
-  publisyear :  req.body.publisyear,
+  publisyear : 2002,
   coverurl : cover,
-filename : file
+filename : file,
+publisherId:req.session.user.id
 })
 await newbm.save()
 //getting the user
-let user = await um.findById(req.session.user.id)
-user.books.push(newbm._id)
-await user.save()
 console.log(`book created successfully`)
 res.json({message:"book was added"})
     }catch(err){
         console.log(`error from createbook \n${err}`)
-        res.status(500).redirect("/500")
+        res.status(500)
     }
 
 }

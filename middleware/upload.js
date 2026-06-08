@@ -11,7 +11,7 @@ exports.storage = multer.diskStorage({
 })
 
 exports.filter = (req,file,cb)=>{
-  if(file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "application/pdf"){
+  if(file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "application/pdf" || file.mimetype === "image/webp"){
     cb(null,true)
   }else{
 cb(null,false)

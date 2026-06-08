@@ -52,6 +52,7 @@ const fetchSearchedBook = await fetch(`http://localhost:9000/books/search?value=
     credentials:"include"
 })
 const response = await fetchSearchedBook.json()
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 if(response.books.length !== 0){
 setBooksArray(response.books)
 }else{

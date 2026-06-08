@@ -1,7 +1,8 @@
 {
   "buildCommand": "npx vite build",
   "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "routes": [
+    { "source": "/(.*)", "destination": "/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

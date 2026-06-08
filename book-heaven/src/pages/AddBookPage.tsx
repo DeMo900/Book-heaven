@@ -31,19 +31,23 @@ const AddBook = () =>{
           })
           if(!res.ok){  
             const error = await res.json()
+          window.location.href="/"
+
            setError(error.error)
             return 
           }
           setError("")
           const data = await res.json()
+          window.location.href="/"
           console.log(data)
         }catch(err){
             setError(err)
         }
     }
     return(
+      
         <div>
-            <Navbar onChange={(e)=>setTitle(e.target.value)} />
+          <Navbar isSearchHidden={true}/>
         <div className="pt-56 mx-auto max-w-3xl">
             <h1 className=" text-[#002542] font-[Inter] text-center md:text-left font-semibold text-5xl">Share your <span className=" text-[#486459] font-[playfair_display] text-5xl"> creative spirit </span>with the world.</h1>
             <p className="text-[#486459] font-[Inter] text-center md:text-left text-md max-w-lg mb-8 leading-6">

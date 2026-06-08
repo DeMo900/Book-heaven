@@ -12,23 +12,24 @@ const Navbar = ({onChange,isSearchHidden=false,isBookPage=false,title}:props) =>
     const height = useRef<number>(0); 
     const [isTopNavVisible,setIsTopNavVisible] = useState<boolean>(true);
     const location = useLocation();
-useEffect(()=>{
-const handleScrolling = ()=>{
+useEffect(() => {
+  height.current = window.scrollY; // add this line
+  
+  const handleScrolling = () => {
     const scrolledDown = height.current - window.scrollY;
-    console.log("scrolled down",scrolledDown);
     height.current = window.scrollY;
-    if(scrolledDown < -20){
-        setIsTopNavVisible(false)
+    if (scrolledDown < -15) {
+      setIsTopNavVisible(false);
+    } else if (scrolledDown > 15) {
+      setIsTopNavVisible(true);
     }
-    else if(scrolledDown > 20 ){
-        setIsTopNavVisible(true)
-    }
-}
-window.addEventListener("scroll",handleScrolling);
-return ()=>{
-    window.removeEventListener("scroll",handleScrolling);
-}
-},[])
+  };
+
+  window.addEventListener("scroll", handleScrolling,{passive:true});
+  return () => {
+    window.removeEventListener("scroll", handleScrolling);
+  };
+}, []);
 const handleSearchClick = () => {
     setIsTopNavVisible(true);
     window.scrollTo({ top: 10000, behavior: "smooth" });

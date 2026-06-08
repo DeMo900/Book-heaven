@@ -43,7 +43,7 @@ const handleSearchClick = () => {
       isTopNavVisible ? "opacity-100 max-w-full" : "opacity-0 max-w-0 pointer-events-none"
     }`}>
       <ArrowLeft className="w-10 h-10 text-slate-700 hover:text-slate-500 transition-colors duration-200 block md:hidden" onClick={() => window.history.back()}/>
-      <h1 className={`text-[#002542] text-4xl shrink-0 font-bold font-serif ${location.pathname !== "/book/:id" ? "block" : "hidden md:block"}`}>Book Heaven</h1>
+      <h1 className={`text-[#002542] text-4xl shrink-0 font-bold font-serif ${location.pathname === "/book/" ? "block" : "hidden md:block"}`}>Book Heaven</h1>
       <h1 className="text-[#002542] text-4xl shrink-0 font-bold md:hidden block font-serif">{title}</h1>
       <ul className="hidden md:flex gap-2 md:gap-8">
         <a href="/library"><li className={`${location.pathname === "/library" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Library</li></a>

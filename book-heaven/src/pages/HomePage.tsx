@@ -89,9 +89,14 @@ useEffect(()=>{
   setStaredBooksArray(data.staredBooksArray)
     })()
 },[genre])
+const handleNavbarClick = (e:React.ChangeEvent<HTMLInputElement>)=>{
+   setSearchValue(e.target.value)
+    window.scrollTo({ top: 10000, behavior: "smooth" })
+    
+}
     return (
         <div className="min-h-screen ">
-            <Navbar onChange={(e)=>setSearchValue(e.target.value)} />
+            <Navbar onChange={handleNavbarClick}/>
             <div className=" md:flex flex flex-col-reverse  md:flex-row justify-between pt-32 pb-10 px-10   ">
 <div className="flex flex-col">
 <h1 className="text-left text-[#486459] mt-16 md:mt-0 font-stretch-90% font-bold text-xl">Recomended</h1>
@@ -125,7 +130,7 @@ useEffect(()=>{
 
                     <div className=" flex flex-wrap justify-center gap-4 md:justify-start pb-24">
                    {isLoading ? <LoadingSquare/> : booksArray.map((book, index) => (
-  <BookCard key={index} handleBookLikeClick={handleBookLikeClick} image={"http://localhost:9000/uploads/" + book.coverurl} title={book.title} author={book.author} isLiked={staredBooksArray.some((el) => el.title === book.title)} />
+  <BookCard key={index} handleBookLikeClick={handleBookLikeClick} image={"http://localhost:9000/uploads/" + book.coverurl} title={book.title} author={book.author} isLiked={staredBooksArray.some((el) => el.title === book.title)} onClick={()=>{window.location.href = `/book/${book.title}`}} />
 ))}
 
                                 

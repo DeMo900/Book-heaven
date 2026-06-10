@@ -31,7 +31,7 @@ useEffect(() => {
   };
 }, []);
 const handleSearchClick = () => {
-    setIsTopNavVisible(true);
+  
      height.current = 10000;
     window.scrollTo({ top: 10000, behavior: "smooth" });
 };

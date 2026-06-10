@@ -86,3 +86,21 @@ return res.status(200).json({ success: true })
     return res.status(500).render("500")
   }
 }
+
+// Get book by title
+exports.getBookByTitle = async (req, res) => {
+  try {
+    const { title } = req.params;
+    const book = await bm.findOne({ title });
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+    const { desc,publisyear, author, coverurl,filename, rating,genre } = book;
+      const user = await um.findOne({_id:req.session.user.id})
+    const isLiked = user.staredbooks.includes(book._id)
+    return res.json({ desc,publisyear, author, title: book.title, coverurl, rating,genre , isLiked,filename});
+  } catch (err) {
+    console.error(`error from getBookByTitle ${err}`);
+    return res.status(500).json({ error: "Server error" });
+  }
+};

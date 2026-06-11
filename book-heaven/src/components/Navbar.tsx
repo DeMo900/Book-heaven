@@ -7,14 +7,15 @@ interface props {
     isSearchHidden?: boolean;
     isBookPage?: boolean;
     title?:string;
+    typeMode?:boolean;
+    onFocus?: () => void;
 }
-const Navbar = ({onChange,isSearchHidden=false,isBookPage=false,title}:props) => {
+const Navbar = ({onChange,isSearchHidden=false,isBookPage=false,title,onFocus}:props) => {
     const height = useRef<number>(0); 
     const [isTopNavVisible,setIsTopNavVisible] = useState<boolean>(true);
     const location = useLocation();
 useEffect(() => {
-  height.current = window.scrollY; // add this line
-  
+  height.current = window.scrollY; 
   const handleScrolling = () => {
     const scrolledDown = height.current - window.scrollY;
     height.current = window.scrollY;
@@ -30,11 +31,6 @@ useEffect(() => {
     window.removeEventListener("scroll", handleScrolling);
   };
 }, []);
-const handleSearchClick = () => {
-  
-     height.current = 10000;
-    window.scrollTo({ top: 10000, behavior: "smooth" });
-};
     return (
   <div className={`${location.pathname === "/add-book" ? "block" : "fixed"} z-50 flex p-10 justify-between items-center gap-8 w-full h-12`}>
     
@@ -55,7 +51,7 @@ const handleSearchClick = () => {
     {/* Search — expands and centers when nav collapses */}
     {!isSearchHidden && (
       <div className={`transition-all duration-300 w-full ${isTopNavVisible ? "flex-1" : "flex-1 flex justify-center"}`}>
-        <Search onChange={onChange} onFocus={handleSearchClick} isTopNavVisible={isTopNavVisible} />
+        <Search onChange={onChange} isTopNavVisible={isTopNavVisible}  onFocus={onFocus} />
       </div>
     )}
 
@@ -69,4 +65,5 @@ const handleSearchClick = () => {
   </div>
 );  
 }
+
 export default Navbar;

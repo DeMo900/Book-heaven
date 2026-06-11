@@ -2,13 +2,13 @@ import Navbar from "../components/Navbar";
 import BottomNavBar from "../components/BottomNavBar";
 import BookCard from "../components/BookCard";
 import LoadingSquare from "../components/Loading";
-import {useEffect,useState} from "react";
+import {useEffect,useState,useCallback,useRef} from "react";
 import {useDebounce} from "react-use";
 interface book {
-    title :string,
+    title : string,
     author : string,
-    desc : string
-    coverurl : string
+    desc : string,
+    coverurl : string,
 }
 const HomePage = () => {
   const [booksArray, setBooksArray] = useState<book[]>([]); 
@@ -18,6 +18,7 @@ const HomePage = () => {
   const [searchValue,setSearchValue] = useState("");
  const [debaunceValue,setDebaunceValue] = useState("")
  const [genre,setGenre] = useState("")
+ const hasFocused = useRef(false)
 useDebounce(() => setDebaunceValue(searchValue),600, [searchValue])
   const fetchAll = async()=>{
     try{
@@ -35,6 +36,7 @@ const fetchTrendBook = await fetch("http://localhost:9000/trend-book",{
 })
 const trendBook = await fetchTrendBook.json()
 setTrendBook(trendBook.book)
+
     }catch(error){
         console.log(error)
     }
@@ -52,10 +54,13 @@ const fetchSearchedBook = await fetch(`http://localhost:9000/books/search?value=
     credentials:"include"
 })
 const response = await fetchSearchedBook.json()
-  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-if(response.books.length !== 0){
-setBooksArray(response.books)
-}else{
+ 
+if (response.books.length !== 0) {
+  setBooksArray(response.books);
+  setTimeout(() => window.scrollTo({ top: 10000, behavior: "smooth" }), 100);
+  // Optional: scroll to results after they load. Commented out to avoid jank.
+  // window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+} else {
     setBooksArray([])
 }
 setStaredBooksArray(response.staredBooksArray)
@@ -89,14 +94,15 @@ useEffect(()=>{
   setStaredBooksArray(data.staredBooksArray)
     })()
 },[genre])
-const handleNavbarClick = (e:React.ChangeEvent<HTMLInputElement>)=>{
-   setSearchValue(e.target.value)
-    window.scrollTo({ top: 10000, behavior: "smooth" })
-    
-}
+const handleNavbarClick = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value;
+  setSearchValue(value);
+ 
+},[])
+ 
     return (
         <div className="min-h-screen ">
-            <Navbar onChange={handleNavbarClick}/>
+            <Navbar onChange={handleNavbarClick} />
             <div className=" md:flex flex flex-col-reverse  md:flex-row justify-between pt-32 pb-10 px-10   ">
 <div className="flex flex-col">
 <h1 className="text-left text-[#486459] mt-16 md:mt-0 font-stretch-90% font-bold text-xl">Recomended</h1>
@@ -113,11 +119,13 @@ const handleNavbarClick = (e:React.ChangeEvent<HTMLInputElement>)=>{
                     <h1 className="text-[#002542] font-[Playfair_Display] text-3xl">Explore Genres</h1>
                     <div className="flex flex-wrap justify-between items-center gap-4">
                       <div className="flex flex-wrap gap-2 items-center">
-                        {["Fiction", "Non-Fiction", "Fantasy", "Science Fiction", "Romance", "Thriller", "Mystery", "Biography", "Self-Help", "History", "Poetry"].map((g) => (
+                        {["All", "Fiction", "Non-Fiction", "Fantasy", "Science Fiction", "Romance", "Thriller", "Mystery", "Biography", "Self-Help", "History", "Poetry"].map((g) => (
                           <div
                             key={g}
                             className={`text-[#486459] font-[Inter] text-md hover:bg-[#bef3db] hover:text-[#002542] transition-colors duration-300 cursor-pointer p-2 rounded-2xl md:mb-8  ${genre === g ? "bg-green-400/50" : " bg-stone-200"}`}
-                            onClick={() => setGenre(genre === g ? "" : g)}
+                          onClick={ g === "All" ? () => setGenre("")
+                           : () => setGenre(genre === g ? "" : g)
+                          }
                           >
                             {g}
                           </div>

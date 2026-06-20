@@ -58,8 +58,6 @@ const response = await fetchSearchedBook.json()
 if (response.books.length !== 0) {
   setBooksArray(response.books);
   setTimeout(() => window.scrollTo({ top: 10000, behavior: "smooth" }), 100);
-  // Optional: scroll to results after they load. Commented out to avoid jank.
-  // window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 } else {
     setBooksArray([])
 }

@@ -6,6 +6,7 @@ import ResetPassword from "./pages/ResetPassword"
 import HomePage from "./pages/HomePage"
 import AddBook from "./pages/AddBookPage"
 import BookPage from "./pages/Book"
+import CuratedPage from "./pages/CuratedPage"
 import { Routes, Route } from 'react-router-dom'
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
 <Route path="/update-password" element={<ResetPassword />} />
 <Route path="/add-book" element={<AddBook />} />
 <Route path="/book/:title" element={<BookPage />} />
+<Route path="/curated" element={<CuratedPage />}/>
     </Routes>
   )
 }

@@ -44,7 +44,7 @@ useEffect(() => {
       <ul className="hidden md:flex gap-2 md:gap-8">
         <a href="/library"><li className={`${location.pathname === "/library" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Library</li></a>
         <a href="/"><li className={`${location.pathname === "/" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Discover</li></a>
-        <a href="/cruated"><li className={`${location.pathname === "/cruated" ? "text-[#002542]" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Cruated</li></a>
+        <a href="/curated"><li className={`${location.pathname === "/curated" ? "text-[#002542]" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Cruated</li></a>
       </ul>
     </div>
 

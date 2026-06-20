@@ -8,6 +8,7 @@ interface Book {
     coverurl: string;
     genre: string;
     rating: number;
+    isLiked:boolean
 }
 const CuratedPage = () => {
     const [genres, setGenres] = useState<string[]>([]);
@@ -28,7 +29,13 @@ const CuratedPage = () => {
     }
     fetchBooks();
     }, []);
+const handleBookLikeClick = async(title:string,newLiked:boolean)=>{
+   await fetch (`http://localhost:9000/books?stared=${newLiked}&title=${encodeURIComponent(title)}`,{
+        method:"PUT",
+        credentials:"include"
+   })
 
+}
     return (
         <div>
           <Navbar isSearchHidden={false} />
@@ -52,7 +59,7 @@ const CuratedPage = () => {
   </div>
   <div className="flex flex-col md:flex-row gap-8 justify-center md:justify-start md:p-4 items-center w-full py-4 ">
 {Books.map((book,index)=>(
-    <BookCard key={index} handleBookLikeClick={()=>{}} title={book.title} author={book.author} isLiked={true} image={`http://localhost:9000/uploads/${book.coverurl}`} onClick={()=>{window.location.href=`/book/${book.title}`}}/>
+    <BookCard key={index} handleBookLikeClick={() => handleBookLikeClick(book.title, book.isLiked)} title={book.title} author={book.author} isLiked={true} image={`http://localhost:9000/uploads/${book.coverurl}`} onClick={()=>{window.location.href=`/book/${book.title}`}}/>
 ))}
   </div>
           </div>

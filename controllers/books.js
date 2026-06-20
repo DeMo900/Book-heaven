@@ -24,17 +24,17 @@ const um = require("../models/user.js")
 exports.GetTrendBook = async(req,res)=>{
   try{
     //getting the trend book
- const book = await bm.find().sort({title:-1}) 
- console.log(book[0])
+ const book = await bm.findOne()
+ .sort({rating:-1}) 
  //sending the book
  return res.status(200).json({
-  book:book[0]
+  book:book
  })
   }catch(err){
     res.json({
       err
     })
-    return console.log(`error from getting the trend book ${err}`)
+    return console.error(`error from getting the trend book ${err}`)
   }
 }
 //searching

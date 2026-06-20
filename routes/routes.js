@@ -30,6 +30,7 @@ router.post("/books/search",middlewares.check,books.searchbook)
 router.put("/books",books.star)
 //add book
 router.get("/books/add-book",addbook.Getaddbook)
+router.get("/trend-book",books.GetTrendBook)
 router.post("/books/add-book",
 body("title").notEmpty().withMessage("title is required").isLength({min:4,max:80}).withMessage("you should type atleast 4 letters in title"),
 body("author").isLength({max:50}).notEmpty().withMessage("author name is required"),

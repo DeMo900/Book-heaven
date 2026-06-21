@@ -1,11 +1,31 @@
 import {create} from "zustand"
-type userState ={
-user:string,
-setUser:(user:string)=>void
+type Book ={
+    title:string,
+    author:string,
+    coverurl:string,
+    genre:string,
+    rating:number,
+    isLiked:boolean
 }
-const getUserState = create<userState>((set)=>({
-    user:"",
-    setUser:((user:string)=>set({user:user}))
+type UserState = {
+user:{
+    username:string,
+    email:string,
+    lastViewedBooks:Book[]
+},
+setUser:(user:UserState["user"])=>void
+setLastViewedBooks:(book:Book[])=>void
+
+}
+const getUserState = create<UserState>((set)=>({
+    user:{
+        username:"",
+        email:"",
+        lastViewedBooks:[]
+    },
+    setUser:((user:UserState["user"])=>set({user})),
+    setLastViewedBooks:((books:Book[])=>set((state)=>({user:{...state.user,lastViewedBooks:books}})))
+
 }))
 
 export default getUserState

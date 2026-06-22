@@ -9,6 +9,7 @@ const ProfilePage = () => {
 const Navigate = useNavigate()
 const user = getUserState((s)=>s.user)
 const staredBooks = bookStore((s)=>s.staredBooks)
+
     return (
         <div>
             <Navbar isSearchHidden={true}/>

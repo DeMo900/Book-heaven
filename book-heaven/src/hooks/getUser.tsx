@@ -11,20 +11,18 @@ type UserState = {
 user:{
     username:string,
     email:string,
-    lastViewedBooks:Book[]
+    role:string
 },
 setUser:(user:UserState["user"])=>void
-setLastViewedBooks:(book:Book[])=>void
 
 }
 const getUserState = create<UserState>((set)=>({
     user:{
         username:"",
         email:"",
-        lastViewedBooks:[]
+        role:""
     },
     setUser:((user:UserState["user"])=>set({user})),
-    setLastViewedBooks:((books:Book[])=>set((state)=>({user:{...state.user,lastViewedBooks:books}})))
 
 }))
 

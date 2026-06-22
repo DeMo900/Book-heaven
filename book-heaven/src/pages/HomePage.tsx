@@ -2,15 +2,25 @@ import Navbar from "../components/Navbar";
 import BottomNavBar from "../components/BottomNavBar";
 import BookCard from "../components/BookCard";
 import LoadingSquare from "../components/Loading";
+import getUserState from "../hooks/getUser";
 import {useEffect,useState,useCallback,useRef} from "react";
 import {useDebounce} from "react-use";
+import bookStore from "../hooks/book-store";
+import { useNavigate } from "react-router-dom";
 interface book {
     title : string,
     author : string,
     desc : string,
     coverurl : string,
+    genre:string,
+    rating:number,
+    isLiked:boolean
 }
 const HomePage = () => {
+  const navigate = useNavigate();
+  const staredBooks = bookStore((s)=>s.staredBooks)
+  const addBookToStaredBooks = bookStore((s)=>s.addBookToStaredBooks)
+  const removeBookFromStaredBooks = bookStore((s)=>s.removeBookFromStaredBooks)
   const [booksArray, setBooksArray] = useState<book[]>([]); 
   const [trendBook, setTrendBook] = useState<book | null>(null)
   const [staredBooksArray, setStaredBooksArray] = useState([]);
@@ -18,6 +28,7 @@ const HomePage = () => {
   const [searchValue,setSearchValue] = useState("");
  const [debaunceValue,setDebaunceValue] = useState("")
  const [genre,setGenre] = useState("")
+ const user = getUserState((s)=>s.user)
  const hasFocused = useRef(false)
 useDebounce(() => setDebaunceValue(searchValue),600, [searchValue])
   const fetchAll = async()=>{
@@ -97,7 +108,10 @@ const handleNavbarClick = useCallback((e:React.ChangeEvent<HTMLInputElement>) =>
   setSearchValue(value);
  
 },[])
- 
+useEffect(()=>{
+  console.log("stared books :" , staredBooks)
+  console.log(user)
+},[user])
     return (
         <div className="min-h-screen ">
             <Navbar onChange={handleNavbarClick} />
@@ -136,7 +150,7 @@ const handleNavbarClick = useCallback((e:React.ChangeEvent<HTMLInputElement>) =>
 
                     <div className=" flex flex-wrap justify-center gap-4 md:justify-start pb-24">
                    {isLoading ? <LoadingSquare/> : booksArray.map((book, index) => (
-  <BookCard key={index} handleBookLikeClick={handleBookLikeClick} image={"http://localhost:9000/uploads/" + book.coverurl} title={book.title} author={book.author} isLiked={staredBooksArray.some((el) => el.title === book.title)} onClick={()=>{window.location.href = `/book/${book.title}`}} />
+  <BookCard key={index} handleBookLikeClick={handleBookLikeClick} image={"http://localhost:9000/uploads/" + book.coverurl} title={book.title} author={book.author} isLiked={staredBooksArray.some((el) => el.title === book.title)} onClick={()=>{ navigate(`/book/${book.title}` );addBookToStaredBooks(book);}} />
 ))}
 
                                 

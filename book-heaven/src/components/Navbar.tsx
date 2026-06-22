@@ -1,6 +1,8 @@
 import Search from "./Search";
 import { UserCircle,ArrowLeft } from "lucide-react";
-import {useLocation} from "react-router-dom";
+import {useLocation,useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
+import getUserState from "../hooks/getUser";
 import { useEffect,useRef,useState } from "react";
 interface props {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -11,6 +13,8 @@ interface props {
     onFocus?: () => void;
 }
 const Navbar = ({onChange,isSearchHidden=false,isBookPage=false,title,onFocus}:props) => {
+  const navigate = useNavigate();
+  const user = getUserState((s)=>s.user)
     const height = useRef<number>(0); 
     const [isTopNavVisible,setIsTopNavVisible] = useState<boolean>(true);
     const location = useLocation();
@@ -38,13 +42,13 @@ useEffect(() => {
     <div className={`flex justify-center gap-8 items-center transition-all duration-300 overflow-hidden shrink-0 ${
       isTopNavVisible ? "opacity-100 max-w-full" : "opacity-0 max-w-0 pointer-events-none"
     }`}>
-      <ArrowLeft className="w-10 h-10 text-slate-700 hover:text-slate-500 transition-colors duration-200 block md:hidden" onClick={() => window.history.back()}/>
+      <ArrowLeft className="w-10 h-10 text-slate-700 hover:text-slate-500 transition-colors duration-200 block md:hidden" onClick={() => navigate(-1)}/>
       <h1 className={`text-[#002542] text-4xl shrink-0 font-bold font-serif ${!location.pathname.startsWith("/book/") ? "block" : "hidden md:block"}`}>Book Heaven</h1>
       <h1 className="text-[#002542] text-4xl shrink-0 font-bold md:hidden block font-serif">{title}</h1>
       <ul className="hidden md:flex gap-2 md:gap-8">
-        <a href="/library"><li className={`${location.pathname === "/library" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Library</li></a>
-        <a href="/"><li className={`${location.pathname === "/" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Discover</li></a>
-        <a href="/curated"><li className={`${location.pathname === "/curated" ? "text-[#002542]" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Cruated</li></a>
+        <Link to="/library"><li className={`${location.pathname === "/library" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Library</li></Link>
+        <Link to="/"><li className={`${location.pathname === "/" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Discover</li></Link>
+        <Link to="/curated"><li className={`${location.pathname === "/curated" ? "text-[#002542]" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}>Cruated</li></Link>
       </ul>
     </div>
 
@@ -59,7 +63,7 @@ useEffect(() => {
     <div className={`transition-all duration-300 overflow-hidden shrink-0 ${
       isTopNavVisible ? "opacity-100 max-w-full" : "opacity-0 max-w-0 pointer-events-none"
     }`}>
-      <UserCircle className="w-10 h-10 text-slate-700 hidden md:block  hover:text-slate-500 transition-colors duration-200" />
+     <h1 className="text-[#002542] text-4xl shrink-0 font-bold  block font-serif">{user?.username}</h1>
     </div>
 
   </div>

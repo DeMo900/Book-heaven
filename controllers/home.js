@@ -1,17 +1,16 @@
-const bm = require("../models/book.js")
-const um = require("../models/user.js")
-//home 
-let Gethome = (req,res)=>{
-  
-    res.render("home")
-}
-module.exports = {Gethome}
+const bm = require("../models/book.js");
+const um = require("../models/user.js");
+//home
+let Gethome = (req, res) => {
+  res.render("home");
+};
+module.exports = { Gethome };
 
 //about
-let Getabout = (req,res)=>{
-    res.render("about")
-}
-module.exports = {Gethome,Getabout}
+let Getabout = (req, res) => {
+  res.render("about");
+};
+module.exports = { Gethome, Getabout };
 /*
 /	Homepage (show top or newest books)	
 /books	Show all books (with search + filter)	

@@ -1,44 +1,42 @@
-
-import LoginPage from "./pages/LoginPage"
-import SignupPage from "./pages/SignupPage"
-import ForgotPasswordPage from "./pages/ForgotPasswordPage"
-import ResetPassword from "./pages/ResetPassword"
-import HomePage from "./pages/HomePage"
-import AddBook from "./pages/AddBookPage"
-import BookPage from "./pages/Book"
-import CuratedPage from "./pages/CuratedPage"
-import ProfilePage from "./pages/Profile"
-import { Routes, Route } from 'react-router-dom'
-import getUserState from "./hooks/getUser"
-import { useEffect } from "react"
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPassword from "./pages/ResetPassword";
+import HomePage from "./pages/HomePage";
+import AddBook from "./pages/AddBookPage";
+import BookPage from "./pages/Book";
+import CuratedPage from "./pages/CuratedPage";
+import ProfilePage from "./pages/Profile";
+import { Routes, Route } from "react-router-dom";
+import getUserState from "./hooks/getUser";
+import { useEffect } from "react";
 const App = () => {
-const setUser = getUserState((s)=>s.setUser)
-const user = getUserState((s)=>s.user)
-  useEffect(()=>{
-    console.log(user)
-    const fetchUser = async()=>{
-      const res = await fetch("http://localhost:9000/profile",{
-        credentials:"include"
-      })
-      const data = await res.json()
-      console.log('fetched')
-     setUser(data)
-    }
-    fetchUser()
-  },[])
+  const setUser = getUserState((s) => s.setUser);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch("http://localhost:9000/profile", {
+        credentials: "include",
+      });
+      const data = await res.json();
+
+      setUser(data);
+    };
+    fetchUser();
+  }, []);
   return (
     <Routes>
-   <Route path="/" element={<HomePage />} />
-<Route path="/login" element={<LoginPage />} />
-<Route path="/signup" element={<SignupPage />} />
-<Route path="/passwordreset" element={<ForgotPasswordPage />} />
-<Route path="/update-password" element={<ResetPassword />} />
-<Route path="/add-book" element={<AddBook />} />
-<Route path="/book/:title" element={<BookPage />} />
-<Route path="/curated" element={<CuratedPage />}/>
-<Route path="/profile" element={<ProfilePage />}/>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/passwordreset" element={<ForgotPasswordPage />} />
+      <Route path="/update-password" element={<ResetPassword />} />
+      <Route path="/add-book" element={<AddBook />} />
+      <Route path="/book/:title" element={<BookPage />} />
+      <Route path="/curated" element={<CuratedPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
-  )
-}
+  );
+};
 
-export default App ;
+export default App;

@@ -1,66 +1,108 @@
-///setting the reouter 
+///setting the reouter
 const express = require("express");
 const router = express.Router();
-const middlewares = require("../middleware")
-const {body} = require("express-validator")
+const middlewares = require("../middleware");
+const { body } = require("express-validator");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-oauth2").Strategy;
 //home
-const homecontroller = require("../controllers/home.js")
+const homecontroller = require("../controllers/home.js");
 //books
-const books = require("../controllers/books.js")
+const books = require("../controllers/books.js");
 //add book
-const addbook = require("../controllers/add-books.js")
+const addbook = require("../controllers/add-books.js");
 //auth
-const { Getsignup , Getsignin , Postsignup , Postsignin , Postforgotpassword , Putupdate , forgotpassword , logout , Getupdate } = require("../controllers/auth");
+const {
+  Getsignup,
+  Getsignin,
+  Postsignup,
+  Postsignin,
+  Postforgotpassword,
+  Putupdate,
+  forgotpassword,
+  logout,
+  Getupdate,
+} = require("../controllers/auth");
 //oauth2
-const {page,fail,sucsess} = require("../controllers/oauth2.js")
+const { page, fail, sucsess } = require("../controllers/oauth2.js");
 //profile
-const profile = require("../controllers/profile.js")
+const profile = require("../controllers/profile.js");
 //errors
 const errors = require("../controllers/errors.js");
 /////////////////////////////////////
 //home
-router.get("/",middlewares.check,homecontroller.Gethome)
+router.get("/", middlewares.check, homecontroller.Gethome);
 //books
-router.get("/books",middlewares.check,books.Getbooks)
+router.get("/books", middlewares.check, books.Getbooks);
 router.get("/book/:title", middlewares.check, books.getBookByTitle);
 
-router.post("/books/search",middlewares.check,books.searchbook)
-router.put("/books",books.star)
+router.post("/books/search", middlewares.check, books.searchbook);
+router.put("/books", books.star);
 //add book
-router.get("/books/add-book",addbook.Getaddbook)
-router.get("/trend-book",books.GetTrendBook)
-router.post("/books/add-book",
-body("title").notEmpty().withMessage("title is required").isLength({min:4,max:80}).withMessage("you should type atleast 4 letters in title"),
-body("author").isLength({max:50}).notEmpty().withMessage("author name is required"),
-body("desc")
-  .notEmpty().withMessage("description is required")
-  .isLength({min:25, max:500}).withMessage("you should type at least 25 letters in description"),
-body("genre").notEmpty().isIn(["Fiction","Non-Fiction","Fantasy","Science Fiction","Romance","Thriller","Mystery","Biography","Self-Help","History","Poetry"])
-.isLength({min:6 , max:16}).withMessage("please pick a genre"),
-addbook.createbook)
+router.get("/books/add-book", addbook.Getaddbook);
+router.get("/trend-book", books.GetTrendBook);
+router.post(
+  "/books/add-book",
+  body("title")
+    .notEmpty()
+    .withMessage("title is required")
+    .isLength({ min: 4, max: 80 })
+    .withMessage("you should type atleast 4 letters in title"),
+  body("author")
+    .isLength({ max: 50 })
+    .notEmpty()
+    .withMessage("author name is required"),
+  body("desc")
+    .notEmpty()
+    .withMessage("description is required")
+    .isLength({ min: 25, max: 500 })
+    .withMessage("you should type at least 25 letters in description"),
+  body("genre")
+    .notEmpty()
+    .isIn([
+      "Fiction",
+      "Non-Fiction",
+      "Fantasy",
+      "Science Fiction",
+      "Romance",
+      "Thriller",
+      "Mystery",
+      "Biography",
+      "Self-Help",
+      "History",
+      "Poetry",
+    ])
+    .isLength({ min: 6, max: 16 })
+    .withMessage("please pick a genre"),
+  addbook.createbook,
+);
 //signup and signin
-router.get("/signup",Getsignup)
-router.get("/signin",Getsignin)
-router.get("/update-password",Getupdate)
-router.get("/forgot-password",forgotpassword)
-router.post("/signup",Postsignup)
-router.post("/login",Postsignin)
-router.post("/logout",logout)
-router.post("/forgot-password",
-    body("email").isEmail().withMessage("email isn't valid")
-    ,Postforgotpassword)
-    router.put("/update-password",
-     body("password").isStrongPassword().withMessage("password isn't strong enough")   
-        ,Putupdate)
+router.get("/signup", Getsignup);
+router.get("/signin", Getsignin);
+router.get("/update-password", Getupdate);
+router.get("/forgot-password", forgotpassword);
+router.post("/signup", Postsignup);
+router.post("/login", Postsignin);
+router.post("/logout", logout);
+router.post(
+  "/forgot-password",
+  body("email").isEmail().withMessage("email isn't valid"),
+  Postforgotpassword,
+);
+router.put(
+  "/update-password",
+  body("password")
+    .isStrongPassword()
+    .withMessage("password isn't strong enough"),
+  Putupdate,
+);
 //google oauth2
-router.get("/auth/google",page);//askingfor the required data
-router.get("/auth/google/callback",fail,sucsess);//callback route
-        //profile
-router.get("/profile",middlewares.check,profile.Getprofile)
+router.get("/auth/google", page); //askingfor the required data
+router.get("/auth/google/callback", fail, sucsess); //callback route
+//profile
+router.get("/profile", middlewares.check, profile.Getprofile);
 //errors
-router.get("/500",errors.get500)
-//about 
-router.get("/about",homecontroller.Getabout)
+router.get("/500", errors.get500);
+//about
+router.get("/about", homecontroller.Getabout);
 module.exports = router;

@@ -19,14 +19,11 @@ It features a smooth UI with gradients, animations, and responsive layouts — p
 
 ## 🧩 Tech Stack
 
-| Part | Technology |
-|------|-------------|
-| Backend | Node.js, Express.js |
-| Frontend | EJS, HTML, CSS |
-| Database | MongoDB (Mongoose) |
-| Styling | Custom CSS with gradients & hover effects |
+| Part     | Technology                                |
+| -------- | ----------------------------------------- |
+| Backend  | Node.js, Express.js                       |
+| Frontend | EJS, HTML, CSS                            |
+| Database | MongoDB (Mongoose)                        |
+| Styling  | Custom CSS with gradients & hover effects |
 
 ---
-
-
-

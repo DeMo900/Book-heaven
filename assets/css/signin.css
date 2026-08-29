@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 body {
   font-family: "Poppins", sans-serif;
@@ -14,7 +14,7 @@ body {
   color: white;
   border-bottom-left-radius: 80px;
   border-bottom-right-radius: 80px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .hero h2 {
@@ -35,10 +35,10 @@ body {
 }
 
 .form-card {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 400px;
   text-align: center;
@@ -94,7 +94,7 @@ footer {
   text-align: center;
   padding: 25px;
   background: #14141e;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 footer p {
@@ -105,20 +105,19 @@ footer p {
 .error {
   color: #ee0606;
   font-size: 1rem;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
-  .google-icon img {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    padding: 5px;
-    background: white;
-    transition: 0.2s;
-  }
+.google-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 5px;
+  background: white;
+  transition: 0.2s;
+}
 
-  .google-icon img:hover {
- width: 42px;
-    height: 42px;
-  }
+.google-icon img:hover {
+  width: 42px;
+  height: 42px;
+}

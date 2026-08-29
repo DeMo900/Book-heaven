@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const EventEmitter = require("events");  
+const EventEmitter = require("events");
 
 const emitter = new EventEmitter();
 
@@ -9,14 +9,14 @@ emitter.on("loggedIn", (email, username) => {
     service: "gmail",
     auth: {
       user: "proplayer524522@gmail.com",
-      pass: process.env.APPCODE
-    }
+      pass: process.env.APPCODE,
+    },
   });
 
   transport.sendMail({
     to: email,
     subject: "Welcome message",
-    text: `Welcome ${username}, happy to see you!`
+    text: `Welcome ${username}, happy to see you!`,
   });
 });
 

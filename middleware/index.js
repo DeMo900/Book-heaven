@@ -1,7 +1,7 @@
-const session = require("./session")
-const { storage, filter } = require("./upload")
-const { check, googestrategy, serial, deserial } = require("./auth")
-const limit = require("./rateLimit")
+const session = require("./session");
+const { storage, filter } = require("./upload");
+const { check, googestrategy, serial, deserial } = require("./auth");
+const limit = require("./rateLimit");
 
 module.exports = {
   session,
@@ -11,5 +11,5 @@ module.exports = {
   googestrategy,
   serial,
   deserial,
-  limit
+  limit,
 };

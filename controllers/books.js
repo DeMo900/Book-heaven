@@ -1,91 +1,89 @@
 // ...existing code...
-const bm = require("../models/book.js")
-const um = require("../models/user.js")
+const bm = require("../models/book.js");
+const um = require("../models/user.js");
 //getting books
- exports.Getbooks = async(req,res)=>{
-  try{
-    const user = await um.findOne({_id:req.session.user.id})
-    let populatedbooks = await user.populate("staredbooks")
-    let staredBooksArray = populatedbooks.staredbooks
+exports.Getbooks = async (req, res) => {
+  try {
+    const user = await um.findOne({ _id: req.session.user.id });
+    let populatedbooks = await user.populate("staredbooks");
+    let staredBooksArray = populatedbooks.staredbooks;
     //checking if genre exists
-    if(req.query.genre){
+    if (req.query.genre) {
       //getting and rendering the filtered books with the picked genre
-    const filterdata = await bm.find({genre:req.query.genre})
-        return res.json({books:filterdata,staredBooksArray})
+      const filterdata = await bm.find({ genre: req.query.genre });
+      return res.status(200).json({ books: filterdata, staredBooksArray });
     }
-    //if not get and render all boks 
-      const books = await bm.find()
-       return res.json({books,staredBooksArray})
-  }catch(err){
-    console.log(`error from Getbooks \n${err}`)
-    res.status(500).redirect("/500")
+    //if not get and render all boks
+    const books = await bm.find();
+    return res.status(200).json({ books, staredBooksArray });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
-}
-exports.GetTrendBook = async(req,res)=>{
-  try{
+};
+exports.GetTrendBook = async (req, res) => {
+  try {
     //getting the trend book
- const book = await bm.findOne()
- .sort({rating:-1}) 
- //sending the book
- return res.status(200).json({
-  book:book
- })
-  }catch(err){
-    res.json({
-      err
-    })
-    return console.error(`error from getting the trend book ${err}`)
+    const book = await bm.findOne().sort({ rating: -1 });
+    //sending the book
+    return res.status(200).json({
+      book: book,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      err,
+    });
   }
-}
+};
 //searching
-exports.searchbook = async(req,res)=>{
- 
-  try{
-    //getting user 
-      const user = await um.findOne({_id:req.session.user.id})
-      //populating
-     let populatedbooks = await user.populate("staredbooks")
-        let staredBooksArray = populatedbooks.staredbooks
-//find a booke that matches the title or genre
-let books = await bm.find({$or:[{title:{$regex:req.query.value,$options:"i" }},
-  {genre:{$regex:req.query.value,$options:"i" }}]})
-//returning the data in json
-return res.json({
-  books,
-  staredBooksArray
-})
-//catching errors
-  }catch(err){  
-console.log(`error from Postbook \n${err}`)
-res.status(500).redirect("/500")
-  } 
-}
-//staring a book 
-exports.star = async(req,res)=>{
-  try{
-    //queries
-    let {title,stared} = req.query
+exports.searchbook = async (req, res) => {
+  try {
     //getting user
-   let user = await um.findOne({email:req.session.user.email})
-    //geting book
-let book = await bm.findOne({title:title})
-//stared
-if(stared === "true"){
- book.rating +=1
-await book.save()
-user.staredbooks.push(book._id)
-await user.save()
-return res.status(200).json({ success: true })
-}
-  await bm.updateOne({title:title},{$inc:{rating:-1}})
- user.staredbooks.pull(book._id)
-await user.save()
-return res.status(200).json({ success: true })
-  }catch(err){
-    console.log(`error while staring ${err}`)
-    return res.status(500).render("500")
+    const user = await um.findOne({ _id: req.session.user.id });
+    //populating
+    let populatedbooks = await user.populate("staredbooks");
+    let staredBooksArray = populatedbooks.staredbooks;
+    //find a booke that matches the title or genre
+    let books = await bm.find({
+      $or: [
+        { title: { $regex: req.query.value, $options: "i" } },
+        { genre: { $regex: req.query.value, $options: "i" } },
+      ],
+    });
+    //returning the data in json
+    return res.status(200).json({
+      books,
+      staredBooksArray,
+    });
+    //catching errors
+  } catch (err) {
+    return res.status(500).json({ error: "Internal Server Error" });
   }
-}
+};
+//staring a book
+exports.star = async (req, res) => {
+  try {
+    //queries
+    let { title, stared } = req.query;
+    //getting user
+    let user = await um.findOne({ email: req.session.user.email });
+    //geting book
+    let book = await bm.findOne({ title: title });
+    //stared
+    if (stared === "true") {
+      book.rating += 1;
+      await book.save();
+      user.staredbooks.push(book._id);
+      await user.save();
+      return res.status(200).json({ success: true });
+    }
+    await bm.updateOne({ title: title }, { $inc: { rating: -1 } });
+    user.staredbooks.pull(book._id);
+    await user.save();
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 // Get book by title
 exports.getBookByTitle = async (req, res) => {
@@ -95,12 +93,24 @@ exports.getBookByTitle = async (req, res) => {
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
     }
-    const { desc,publisyear, author, coverurl,filename, rating,genre } = book;
-      const user = await um.findOne({_id:req.session.user.id})
-    const isLiked = user.staredbooks.includes(book._id)
-    return res.json({ desc,publisyear, author, title: book.title, coverurl, rating,genre , isLiked,filename});
+    const { desc, publisyear, author, coverurl, filename, rating, genre } =
+      book;
+    const user = await um.findOne({ _id: req.session.user.id });
+    const isLiked = user.staredbooks.includes(book._id);
+    return res
+      .status(200)
+      .json({
+        desc,
+        publisyear,
+        author,
+        title: book.title,
+        coverurl,
+        rating,
+        genre,
+        isLiked,
+        filename,
+      });
   } catch (err) {
-    console.error(`error from getBookByTitle ${err}`);
     return res.status(500).json({ error: "Server error" });
   }
 };

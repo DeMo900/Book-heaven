@@ -1,5 +1,6 @@
 const bm = require("../models/book.js");
 const um = require("../models/user.js");
+const fileType = require("file-type");
 const { validationResult } = require("express-validator");
 
 // Handler to create a new book
@@ -10,7 +11,7 @@ exports.createbook = async (req, res) => {
       return res.status(400).json({ error: results.array()[0].msg });
     }
     // Extract uploaded file names
-
+    const type = await fileType.fromFile(req.files.file[0].path);
     let cover = req.files.cover[0].filename;
     let file = req.files.file[0].filename;
     if (!cover || !file) {

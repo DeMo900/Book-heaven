@@ -14,7 +14,7 @@ exports.createbook = async (req, res) => {
     const type = await fileType.fromFile(req.files.file[0].path);
     let cover = req.files.cover[0].filename;
     let file = req.files.file[0].filename;
-    if (!cover || !file) {
+    if (!cover || !file || type.mime !== "application/pdf" ) {
       return res
         .status(400)
         .json({ error: "cover image and file are required" });

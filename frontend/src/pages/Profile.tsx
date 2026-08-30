@@ -34,7 +34,7 @@ const ProfilePage = () => {
                   key={book.title}
                   title={book.title}
                   author={book.author}
-                  image={`http://localhost:9000/uploads/${book.coverurl}`}
+                  image={`${import.meta.env.VITE_BASE_URL}/uploads/${book.coverurl}`}
                   handleBookLikeClick={() => ""}
                   onClick={() => Navigate(`/book/${book.title}`)}
                   isLiked={book.isLiked}

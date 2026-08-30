@@ -26,7 +26,7 @@ const signupForm = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:9000/signup", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

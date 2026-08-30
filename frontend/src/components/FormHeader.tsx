@@ -13,7 +13,7 @@ const FormHeader = ({ title, description, resetPassword = false }: props) => {
 
       {!resetPassword && (
         <a
-          href="http://localhost:9000/auth/google"
+          href={`${import.meta.env.VITE_BASE_URL}/auth/google`}
           className="w-full flex mb-2 bg-stone-200 shadow-lg border-4 border-slate-300 items-center justify-center p-2 rounded-lg gap-2 cursor-pointer duration-300 hover:scale-105 transition-all hover:bg-slate-300"
         >
           <img

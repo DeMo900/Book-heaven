@@ -16,7 +16,7 @@ const LoginForm = () => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:9000/login", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/login`, {
       credentials: "include",
       method: "POST",
       headers: {

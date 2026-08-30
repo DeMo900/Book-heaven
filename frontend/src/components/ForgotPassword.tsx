@@ -10,7 +10,7 @@ const ForgotPassword = () => {
   };
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:9000/forgot-password", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/forgot-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -22,7 +22,7 @@ const AddBook = () => {
       formData.append("genre", genre);
       formData.append("cover", cover);
       formData.append("file", file);
-      const res = await fetch("http://localhost:9000/books/add-book", {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/books/add-book`, {
         method: "POST",
         credentials: "include",
         body: formData,

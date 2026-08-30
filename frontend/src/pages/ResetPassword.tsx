@@ -14,7 +14,7 @@ const ResetPassword = () => {
   useEffect(() => {
     const VerifyCode = async () => {
       const res = await fetch(
-        `http://localhost:9000/update-password?code=${code}`,
+        `${import.meta.env.VITE_BASE_URL}/update-password?code=${code}`,
       );
       const data = await res.json();
       if (data.error) {
@@ -27,7 +27,7 @@ const ResetPassword = () => {
   }, [code]);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:9000/update-password", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/update-password`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

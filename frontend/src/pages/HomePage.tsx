@@ -32,7 +32,7 @@ const HomePage = () => {
   const fetchAll = async () => {
     try {
       setLoading(true);
-      const fetchBooks = await fetch("http://localhost:9000/books", {
+      const fetchBooks = await fetch(`${import.meta.env.VITE_BASE_URL}/books`, {
         credentials: "include",
       });
       const books = await fetchBooks.json();
@@ -40,7 +40,7 @@ const HomePage = () => {
       setBooksArray(books.books);
       setStaredBooksArray(books.staredBooksArray);
       setLoading(false);
-      const fetchTrendBook = await fetch("http://localhost:9000/trend-book", {
+      const fetchTrendBook = await fetch(`${import.meta.env.VITE_BASE_URL}/trend-book`, {
         credentials: "include",
       });
       const trendBook = await fetchTrendBook.json();
@@ -56,7 +56,7 @@ const HomePage = () => {
       try {
         setLoading(true);
         const fetchSearchedBook = await fetch(
-          `http://localhost:9000/books/search?value=${encodeURIComponent(searchValue)}`,
+          `${import.meta.env.VITE_BASE_URL}/books/search?value=${encodeURIComponent(searchValue)}`,
           {
             method: "POST",
             credentials: "include",
@@ -81,7 +81,7 @@ const HomePage = () => {
     })();
   }, [debaunceValue]);
   const fetchStared = async () => {
-    const res = await fetch("http://localhost:9000/books", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/books`, {
       credentials: "include",
     });
     const data = await res.json();
@@ -89,7 +89,7 @@ const HomePage = () => {
   };
   const handleBookLikeClick = async (title: string, newLiked: boolean) => {
     await fetch(
-      `http://localhost:9000/books?stared=${newLiked}&title=${encodeURIComponent(title)}`,
+      `${import.meta.env.VITE_BASE_URL}/books?stared=${newLiked}&title=${encodeURIComponent(title)}`,
       {
         method: "PUT",
         credentials: "include",
@@ -100,7 +100,7 @@ const HomePage = () => {
   };
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:9000/books?genre=${genre}`, {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/books?genre=${genre}`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -145,7 +145,7 @@ const HomePage = () => {
         </div>
         <img
           className="w-full md:w-122.5 border-l-4 border-l-amber-950 md:h-[110vh] h-[50vh] object-cover rounded-xl "
-          src={"http://localhost:9000/uploads/" + trendBook?.coverurl}
+          src={`${import.meta.env.VITE_BASE_URL}/uploads/` + trendBook?.coverurl}
           alt=""
         />
       </div>
@@ -197,7 +197,7 @@ const HomePage = () => {
               <BookCard
                 key={index}
                 handleBookLikeClick={handleBookLikeClick}
-                image={"http://localhost:9000/uploads/" + book.coverurl}
+                image={`${import.meta.env.VITE_BASE_URL}/uploads/` + book.coverurl}
                 title={book.title}
                 author={book.author}
                 isLiked={staredBooksArray.some((el) => el.title === book.title)}

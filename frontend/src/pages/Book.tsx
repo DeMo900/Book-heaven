@@ -21,7 +21,7 @@ const bookPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`http://localhost:9000/book/${title}`, {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/book/${title}`, {
           credentials: "include",
         });
         const data = await res.json();
@@ -35,7 +35,7 @@ const bookPage = () => {
   const handleLike = async () => {
     setIsLiked(!isLiked);
     await fetch(
-      `http://localhost:9000/books?stared=${!isLiked}&title=${encodeURIComponent(title)}`,
+      `${import.meta.env.VITE_BASE_URL}/books?stared=${!isLiked}&title=${encodeURIComponent(title)}`,
       {
         method: "PUT",
         credentials: "include",
@@ -50,7 +50,7 @@ const bookPage = () => {
           <div className="relative md:w-full">
             <img
               className="w-[30vh] md:w-[160vh] h-[46vh] md:h-[90vh] object-cover rounded-xl hover:scale-100 hover:opacity-90 transition duration-600 cursor-pointer hover:shadow-2xl hover:shadow-black"
-              src={`http://localhost:9000/uploads/${book?.coverurl}`}
+              src={`${import.meta.env.VITE_BASE_URL}/uploads/${book?.coverurl}`}
               alt=""
             />
             <div className="absolute top-4 right-4 bg-stone-200 p-2 rounded-xl ">
@@ -88,7 +88,7 @@ const bookPage = () => {
             <button
               className="px-8 py-6 bg-[#002542] text-white rounded-md flex items-center justify-center gap-2 hover:bg-slate-500 transition duration-400 cursor-pointer"
               onClick={() =>
-                (window.location.href = `http://localhost:9000/uploads/${book?.filename}`)
+                (window.location.href = `${import.meta.env.VITE_BASE_URL}/uploads/${book?.filename}`)
               }
             >
               READ NOW <PlayIcon className="w-5 h-5" />{" "}

@@ -17,7 +17,7 @@ const CuratedPage = () => {
   const [AllBooks, setAllBooks] = useState<Book[]>([]);
   const [search, setSearch] = useState("");
   async function fetchBooks() {
-    const response = await fetch("http://localhost:9000/books", {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/books`, {
       credentials: "include",
     });
     const data = await response.json();
@@ -66,7 +66,7 @@ const CuratedPage = () => {
     books.filter((book) => book.isLiked !== newLiked);
 
     await fetch(
-      `http://localhost:9000/books?stared=${newLiked}&title=${encodeURIComponent(title)}`,
+      `${import.meta.env.VITE_BASE_URL}/books?stared=${newLiked}&title=${encodeURIComponent(title)}`,
       {
         method: "PUT",
         credentials: "include",
@@ -118,7 +118,7 @@ const CuratedPage = () => {
                 title={book.title}
                 author={book.author}
                 isLiked={true}
-                image={`http://localhost:9000/uploads/${book.coverurl}`}
+                image={`${import.meta.env.VITE_BASE_URL}/uploads/${book.coverurl}`}
                 onClick={() => {
                   window.location.href = `/book/${book.title}`;
                 }}

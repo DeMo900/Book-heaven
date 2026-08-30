@@ -1,4 +1,4 @@
-////
+// Book Database Model
 const mongodb = require("mongoose");
 
 const book = new mongodb.Schema({
@@ -28,34 +28,10 @@ const book = new mongodb.Schema({
   coverurl: { type: String, required: true },
   rating: { type: Number, default: 0 },
   filename: { type: String, unique: true, required: true },
-  createdAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now},
   publisherId: { type: String, required: true },
 });
 
 const bm = mongodb.model("book", book);
 
 module.exports = bm;
-/*
-title
-author
-desc
-genre
-publishyear
-coverurl
-rating
-reviews
-createdAt
-[
-  "Fiction",
-  "Non-Fiction",
-  "Fantasy",
-  "Science Fiction",
-  "Romance",
-  "Thriller",
-  "Mystery",
-  "Biography",
-  "Self-Help",
-  "History",
-  "Poetry"
-]
-*/

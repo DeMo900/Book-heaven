@@ -25,7 +25,7 @@ exports.createbook = async (req, res) => {
       author: req.body.author,
       desc: req.body.desc,
       genre: req.body.genre,
-      publisyear: 2002,
+      publisyear: req.body.publisyear,
       coverurl: cover,
       filename: file,
       publisherId: req.session.user.id,

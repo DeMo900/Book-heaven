@@ -31,7 +31,7 @@ exports.Postsignup = async (req, res) => {
     const hashedpassword = await bcrypt.hash(password, 11);
     await um.create({ username, email, password: hashedpassword });
     
-    return res.redirect("/signin");
+    return res.status(200).json({ message: "user was created" });
   } catch (err) {
     return res.status(500).json({ error: "Internal server error" });
   }
@@ -98,7 +98,7 @@ exports.Postforgotpassword = async (req, res) => {
     let transport = mail.createTransport({
       service: "gmail",
       auth: {
-        user: "proplayer524522@gmail.com",
+        user: process.env.EMAIL,
         pass: process.env.APPCODE,
       },
     });

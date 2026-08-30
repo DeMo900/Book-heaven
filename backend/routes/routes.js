@@ -67,7 +67,6 @@ router.post(
 );
 // Authentication routes
 router.get("/update-password", Getupdate);
-router.get("/forgot-password", forgotpassword);
 router.post("/signup", Postsignup);
 router.post("/login", Postsignin);
 router.post(

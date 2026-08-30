@@ -20,6 +20,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),
 );
+app.set("trust proxy", 1);
 app.options("*", cors());
 app.use(middlewares.limit);
 app.use(express.json());

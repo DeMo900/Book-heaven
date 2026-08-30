@@ -11,7 +11,7 @@ exports.createbook = async (req, res) => {
       return res.status(400).json({ error: results.array()[0].msg });
     }
     // Extract uploaded file names
-    const type = await fileType.fromFile(req.files.file[0].path);
+    const type = await fileType.fileTypeFromFile(req.files.file[0].path);
     let cover = req.files.cover[0].filename;
     let file = req.files.file[0].filename;
     if (!cover || !file || type.mime !== "application/pdf" ) {

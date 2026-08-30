@@ -13,7 +13,6 @@ const {
   Postsignin,
   Postforgotpassword,
   Putupdate,
-  forgotpassword,
   Getupdate,
 } = require("../controllers/auth");
 const { page, fail, sucsess } = require("../controllers/oauth2.js");

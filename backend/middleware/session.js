@@ -7,6 +7,10 @@ module.exports = session({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 900000 },
+  cookie: {
+    maxAge: 900000,
+    sameSite: "none",
+    secure: true,
+  },
   store: redisstore,
 });

@@ -21,7 +21,6 @@ app.use(
   }),
 );
 app.set("trust proxy", 1);
-app.options("*", cors());
 app.use(middlewares.limit);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

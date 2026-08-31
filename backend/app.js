@@ -15,7 +15,7 @@ const app = express();
 //middlewares
 app.use(
   cors({
-    origin: process.env.BASE_URL,
+    origin: process.env.FRONT_END_BASE_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),

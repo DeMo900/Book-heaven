@@ -107,7 +107,7 @@ exports.Postforgotpassword = async (req, res) => {
     await transport.sendMail({
       to: req.body.email,
       subject: "Here is your url to reset your password",
-      text: `${process.env.BASE_URL}/update-password?code=${code}`,
+      text: `${process.env.FRONT_END_BASE_URL}/update-password?code=${code}`,
     });
     return res
       .status(200)

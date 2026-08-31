@@ -17,6 +17,6 @@ let sucsess = async (req, res) => {
     username: req.user.username,
   };
   emiter.emit("loggedIn", req.user.email, req.user.username);
-  res.redirect(process.env.BASE_URL + "/");
+  res.redirect(process.env.FRONT_END_BASE_URL + "/");
 };
 module.exports = { page, fail, sucsess };

@@ -6,7 +6,7 @@ const BottomNavBar = () => {
   const location = useLocation();
 
   return (
-    <div className="flex bg-stone-200 fixed items-center md:hidden justify-between bottom-0 w-full h-20 ">
+    <div className="flex bg-stone-200 fixed items-center md:hidden justify-between bottom-0 w-full h-16 ">
       <Link
         to="/library"
         className="flex flex-col justify-center items-center w-full hover:bg-stone-300 transition-colors duration-200"

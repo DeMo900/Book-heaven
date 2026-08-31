@@ -26,8 +26,10 @@ const HomePage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [debaunceValue, setDebaunceValue] = useState("");
   const [genre, setGenre] = useState("");
-  const user = getUserState((s) => s.user);
-
+  const {user,fetchUser} = getUserState((s) => s);
+useEffect(()=>{
+  fetchUser();
+},[])
   useDebounce(() => setDebaunceValue(searchValue), 600, [searchValue]);
   const fetchAll = async () => {
     try {
@@ -116,7 +118,6 @@ const HomePage = () => {
     },
     [],
   );
-  useEffect(() => {}, [user]);
   return (
     <div className="min-h-screen ">
       <Navbar onChange={handleNavbarClick} />
@@ -182,11 +183,13 @@ const HomePage = () => {
               </div>
             ))}
           </div>
-          <a href="/add-book" className="mb-8">
-            <button className="bg-[#002542] text-white px-4 py-2 mr-8 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">
-              Publish a Book
-            </button>
-          </a>
+          {user?.role === "creator" && (
+            <a href="/add-book" className="mb-8">
+              <button className="bg-[#002542] text-white px-4 py-2 mr-8 rounded-xl text-lg hover:bg-slate-500 transition-colors duration-200">
+                Publish a Book
+              </button>
+            </a>
+          )}
         </div>
 
         <div className=" flex flex-wrap justify-center gap-4 md:justify-start pb-24">

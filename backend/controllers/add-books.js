@@ -10,6 +10,10 @@ exports.createbook = async (req, res) => {
     if (!results.isEmpty()) {
       return res.status(400).json({ error: results.array()[0].msg });
     }
+    const user = await um.findById(req.session.user.id);
+    if (user.role !== "creator") {
+      return res.status(403).json({ error: "user is not a creator" });
+    }
     // Extract uploaded file names
     const type = await fileType.fileTypeFromFile(req.files.file[0].path);
     let cover = req.files.cover[0].filename;

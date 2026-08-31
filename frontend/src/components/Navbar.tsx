@@ -65,13 +65,6 @@ const Navbar = ({
           {title}
         </h1>
         <ul className="hidden md:flex gap-2 md:gap-8">
-          <Link to="/library">
-            <li
-              className={`${location.pathname === "/library" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}
-            >
-              Library
-            </li>
-          </Link>
           <Link to="/">
             <li
               className={`${location.pathname === "/" ? "text-[#002542] font-bold border-b-black border-b-2" : "text-slate-500"} text-xl font-medium hover:opacity-80 transition-opacity duration-200`}

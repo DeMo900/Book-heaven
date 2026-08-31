@@ -2,9 +2,11 @@ import { useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import FormFooter from "../components/FormFooter";
 import BottomNavBar from "../components/BottomNavBar";
+import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import { ImagePlus } from "lucide-react";
 const AddBook = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [desc, setDesc] = useState("");
@@ -29,14 +31,12 @@ const AddBook = () => {
       });
       if (!res.ok) {
         const error = await res.json();
-        window.location.href = "/";
 
         setError(error.error);
         return;
       }
       setError("");
-
-      window.location.href = "/";
+      navigate("/");
     } catch (err) {
       setError(err);
     }

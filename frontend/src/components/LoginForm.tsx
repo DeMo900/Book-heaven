@@ -14,7 +14,7 @@ const LoginForm = () => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     const res = await fetch(`${import.meta.env.VITE_BASE_URL}/login`, {
       credentials: "include",
